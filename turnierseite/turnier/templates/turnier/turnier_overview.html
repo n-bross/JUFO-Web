@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Jufo Tuniere{% endblock %}
+{% block content %}
+<!--Using Boostrap classes for styling here-->
+<div class="jumbotron">
+	<div class="container">
+		<h1>Turnier Dasboard</h1>
+	</div>
+	<div class="container">
+		<div>
+			<a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.turnier_erstellen') }} ">Turnier Erstellen</a>
+		</div>
+		<h1>Alle Turniere</h1>
+        <table id="" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+				{% for turnier in alle_turniere %}
+                <tr>
+                    <td> <a href="{{ url_for('turnier.turnier_details', id=turnier['id']) }}">{{ turnier['id']}}</a></td>
+                    <td> <a href="{{ url_for('turnier.turnier_details', id=turnier['id']) }}">{{ turnier['name'] }}</a></td>
+                    <td>{{ turnier['datumDerAustragung'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+	</div>
+</div>
+{% endblock %}

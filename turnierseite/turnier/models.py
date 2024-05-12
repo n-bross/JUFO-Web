@@ -1,10 +1,13 @@
+import datetime
+
 from turnierseite.app import db
 
-class Tunier(db.Model):
+class Turnier(db.Model):
     __tablename__ = 'turnier'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.Text(100), nullable=False)
+    name = db.Column(db.Text(100), nullable=False, unique=True)
+    datumDerAustragung = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return self

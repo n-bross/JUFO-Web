@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}Turnier Anlage{% endblock %}
+{% block content %}
+<!--Using Boostrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Turnier</h1>
+        {{ render_form(form) }}
+    </div>
+</div>
+{% endblock %}

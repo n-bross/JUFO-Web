@@ -44,7 +44,7 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
-    from turnierseite.turnier.models import Tunier, Gruppe, Team, Spiele
+    from turnierseite.turnier.models import Turnier, Gruppe, Team, Spiele
 
     from turnierseite.user_handeling.models import User
     @login_manager.user_loader
