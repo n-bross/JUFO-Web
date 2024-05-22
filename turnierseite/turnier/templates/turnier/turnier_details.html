@@ -7,6 +7,14 @@
     <div class="container">
         {{ render_form(form) }}
     </div>
-    <a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.gruppe_erstellen', turnier_id=turnier['id']) }} ">{{turnier['id']}} Gruppe Anlegen</a>
+    <div class="container">
+		<h2>Übersicht der Gruppen:</h2>
+        {% for gruppe in gruppen %}
+        <h3>{{gruppe['name']}}</h3>
+    {% endfor %}
+    </div>
+    <div class="container">
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.gruppe_erstellen', turnier_id=turnier['id']) }} ">Gruppe Anlegen</a>
+    </div>
 </div>
 {% endblock %}

@@ -41,17 +41,21 @@ def turnier_details(id):
 
     gruppen = Gruppe.query.filter(Gruppe.turnierId == id)
 
-    return render_template('turnier/turnier_details.html', form=turnier_form, turnier=turnier)
+    return render_template('turnier/turnier_details.html', form=turnier_form, turnier=turnier, gruppen=gruppen)
 
 
 @turnier.route('/gruppe_erstellen/<turnier_id>', methods=['GET', 'POST'])
 def gruppe_erstellen(turnier_id):
     gruppe_form = GruppeForm()
     if request.method == 'GET':
-        return render_template("gruppe/gruppe_erstellen.html", form=gruppe_form, turnier_id=turnier_id)
+        turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+        turnier_form= TurnierForm(obj=turnier)
+        gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
+
+        return render_template("gruppe/gruppe_erstellen.html", form=gruppe_form, turnier_form=turnier_form, gruppen=gruppen)
     elif request.method == 'POST':
         #insert des neuen Turnieres in die Datenbank
-        gruppe = Gruppe(name=gruppe_form.name.data, turnierId=id)
+        gruppe = Gruppe(turnierId=turnier_id, name=gruppe_form.name.data)
         db.session.add(gruppe)
         db.session.commit()
 
