@@ -37,27 +37,42 @@ def turnier_erstellen():
 @turnier.route('/turnier_details/<id>', methods=['GET', 'POST'])
 def turnier_details(id):
     turnier = Turnier.query.filter(Turnier.id == id).first()
-    turnier_form= TurnierForm(obj=turnier)
+    turnier_form = TurnierForm(obj=turnier)
+    if request.method == 'GET':
 
-    gruppen = Gruppe.query.filter(Gruppe.turnierId == id)
+        gruppen = Gruppe.query.filter(Gruppe.turnierId == id)
+        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)
 
-    return render_template('turnier/turnier_details.html', form=turnier_form, turnier=turnier, gruppen=gruppen)
-
+    ##update eines geänderten Objetes muss noch ergänzt werden
+    ##elif request.method == 'POST':
+    ##    #insert des neuen Turnieres in die Datenbank
+    ##    turnier = Turnier(name=turnier_form.name.data, datumDerAustragung=turnier_form.datumDerAustragung.data)
+    ##    db.session.update(turnier)
+    ##    db.session.commit()
+##
+    ##    #laden eines neuen html
+    ##    return redirect(url_for('turnier.index'))
 
 @turnier.route('/gruppe_erstellen/<turnier_id>', methods=['GET', 'POST'])
 def gruppe_erstellen(turnier_id):
     gruppe_form = GruppeForm()
     if request.method == 'GET':
         turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
-        turnier_form= TurnierForm(obj=turnier)
+        turnier_form = TurnierForm(obj=turnier)
+
         gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
 
-        return render_template("gruppe/gruppe_erstellen.html", form=gruppe_form, turnier_form=turnier_form, gruppen=gruppen)
+        return render_template("gruppe/gruppe_erstellen.html", turnier=turnier, turnier_form=turnier_form, gruppe_form=gruppe_form, gruppen=gruppen)
     elif request.method == 'POST':
         #insert des neuen Turnieres in die Datenbank
         gruppe = Gruppe(turnierId=turnier_id, name=gruppe_form.name.data)
         db.session.add(gruppe)
         db.session.commit()
 
+        turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+        turnier_form = TurnierForm(obj=turnier)
+
+        gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
+
         #laden eines neuen html
-        return redirect(url_for('turnier.index'))
+        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)

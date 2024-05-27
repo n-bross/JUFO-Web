@@ -5,7 +5,7 @@
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
-        {{ render_form(form) }}
+        {{ render_form(turnier_form) }}
     </div>
     <div class="container">
 		<h2>Übersicht der Gruppen:</h2>
@@ -13,6 +13,7 @@
         <h3>{{gruppe['name']}}</h3>
     {% endfor %}
     </div>
+    {% block turnier_anlage %}{% endblock %}
     <div class="container">
         <a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.gruppe_erstellen', turnier_id=turnier['id']) }} ">Gruppe Anlegen</a>
     </div>
