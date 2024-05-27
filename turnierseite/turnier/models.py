@@ -10,7 +10,11 @@ class Turnier(db.Model):
     datumDerAustragung = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
-        return self
+        return f"<Turnier id={self.id} name={self.name} datumDerAustragung={self.datumDerAustragung}>"
+
+    def __str__(self):
+        return f"Turnier(id={self.id}, name={self.name}, datumDerAustragung={self.datumDerAustragung})"
+
 
 class Gruppe(db.Model):
     __tablename__ = 'gruppe'
@@ -20,7 +24,10 @@ class Gruppe(db.Model):
     name = db.Column(db.Text(100), nullable=False)
 
     def __repr__(self):
-        return self
+        return f"<Gruppe id={self.id} name={self.name} turnierId={self.turnierId}>"
+
+    def __str__(self):
+        return f"Gruppe(id={self.id}, name={self.name}, turnierId={self.turnierId})"
 
 class Team(db.Model):
     __tablename__ = 'teams'
@@ -33,7 +40,11 @@ class Team(db.Model):
     gegentreffer = db.Column(db.Integer)
 
     def __repr__(self):
-        return self
+        return f"<Team id={self.id} name={self.name} gruppeId={self.gruppeId} punkte={self.punkte} treffer={self.treffer} gegentreffer={self.gegentreffer}>"
+
+    def __str__(self):
+        return f"Team(id={self.id}, name={self.name}, gruppeId={self.gruppeId}, punkte={self.punkte}, treffer={self.treffer}, gegentreffer={self.gegentreffer})"
+
 
 class Spiele(db.Model):
     __tablename__ = 'spiele'
@@ -47,5 +58,7 @@ class Spiele(db.Model):
     toreT2 = db.Column(db.Integer)
 
     def __repr__(self):
-        return self
+        return f"<Spiele id={self.id} team1Id={self.team1Id} team2Id={self.team2Id} gespielt={self.gespielt} runde={self.runde} toreT1={self.toreT1} toreT2={self.toreT2}>"
 
+    def __str__(self):
+        return f"Spiele(id={self.id}, team1Id={self.team1Id}, team2Id={self.team2Id}, gespielt={self.gespielt}, runde={self.runde}, toreT1={self.toreT1}, toreT2={self.toreT2})"

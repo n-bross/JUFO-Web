@@ -1,6 +1,7 @@
 from flask import render_template, request, Blueprint, url_for, redirect
 from flask_login import current_user
-from sqlalchemy import text
+
+from flask_sqlalchemy import query
 
 import datetime
 
@@ -11,6 +12,13 @@ from turnierseite.app import db
 
 
 turnier = Blueprint('turnier', __name__, template_folder='templates')
+
+
+def lade_turnier_daten(turnier_id):
+        turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+        turnier_form = TurnierForm(obj=turnier)
+        gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
+        return turnier, turnier_form, gruppen
 
 
 @turnier.route('/')
@@ -57,10 +65,7 @@ def turnier_details(id):
 def gruppe_erstellen(turnier_id):
     gruppe_form = GruppeForm()
     if request.method == 'GET':
-        turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
-        turnier_form = TurnierForm(obj=turnier)
-
-        gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
+        turnier, turnier_form, gruppen = lade_turnier_daten(turnier_id)
 
         return render_template("gruppe/gruppe_erstellen.html", turnier=turnier, turnier_form=turnier_form, gruppe_form=gruppe_form, gruppen=gruppen)
     elif request.method == 'POST':
@@ -69,10 +74,20 @@ def gruppe_erstellen(turnier_id):
         db.session.add(gruppe)
         db.session.commit()
 
-        turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
-        turnier_form = TurnierForm(obj=turnier)
-
-        gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
-
+        turnier, turnier_form, gruppen = lade_turnier_daten(turnier_id)
         #laden eines neuen html
         return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)
+
+@turnier.route('/gruppe_entfernen/<turnier_id>/<gruppe_id>')
+def gruppe_entfernen(turnier_id, gruppe_id):
+    gruppe = Gruppe.query.get(gruppe_id)
+    if gruppe:
+        db.session.delete(gruppe)
+        db.session.commit()
+    else:
+        print(f"Gruppe mit id {gruppe_id} nicht gefunden.")
+
+    turnier, turnier_form, gruppen = lade_turnier_daten(turnier_id)
+
+    # Render the updated template
+    return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)
