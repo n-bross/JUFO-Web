@@ -13,13 +13,11 @@ from turnierseite.app import db
 
 turnier = Blueprint('turnier', __name__, template_folder='templates')
 
-
 def lade_turnier_daten(turnier_id):
         turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
         turnier_form = TurnierForm(obj=turnier)
         gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id)
         return turnier, turnier_form, gruppen
-
 
 @turnier.route('/')
 def index():
@@ -42,24 +40,26 @@ def turnier_erstellen():
         return redirect(url_for('turnier.index'))
 
 
-@turnier.route('/turnier_details/<id>', methods=['GET', 'POST'])
-def turnier_details(id):
-    turnier = Turnier.query.filter(Turnier.id == id).first()
-    turnier_form = TurnierForm(obj=turnier)
-    if request.method == 'GET':
+@turnier.route('/turnier_details/<turnier_id>', methods=['GET', 'POST'])
+def turnier_details(turnier_id):
+    turnier, turnier_form, gruppen = lade_turnier_daten(turnier_id)
 
-        gruppen = Gruppe.query.filter(Gruppe.turnierId == id)
-        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)
+    if request.method == 'POST':
+        # Retrieve the Turnier instance
+        turnier = Turnier.query.get(turnier_id)
 
-    ##update eines geänderten Objetes muss noch ergänzt werden
-    ##elif request.method == 'POST':
-    ##    #insert des neuen Turnieres in die Datenbank
-    ##    turnier = Turnier(name=turnier_form.name.data, datumDerAustragung=turnier_form.datumDerAustragung.data)
-    ##    db.session.update(turnier)
-    ##    db.session.commit()
-##
-    ##    #laden eines neuen html
-    ##    return redirect(url_for('turnier.index'))
+        if turnier_form.validate_on_submit():
+            # Update the Turnier instance with form data
+            turnier.name = turnier_form.name.data
+            turnier.datumDerAustragung = turnier_form.datumDerAustragung.data
+
+            db.session.add(turnier)
+
+            # Commit the changes to the database
+            db.session.commit()
+
+    # Load a new HTML template with the updated data
+    return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen)
 
 @turnier.route('/gruppe_erstellen/<turnier_id>', methods=['GET', 'POST'])
 def gruppe_erstellen(turnier_id):

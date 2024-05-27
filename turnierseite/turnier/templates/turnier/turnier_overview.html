@@ -22,8 +22,8 @@
             <tbody>
 				{% for turnier in alle_turniere %}
                 <tr>
-                    <td> <a href="{{ url_for('turnier.turnier_details', id=turnier['id']) }}">{{ turnier['id']}}</a></td>
-                    <td> <a href="{{ url_for('turnier.turnier_details', id=turnier['id']) }}">{{ turnier['name'] }}</a></td>
+                    <td> <a href="{{ url_for('turnier.turnier_details', turnier_id=turnier['id']) }}">{{ turnier['id']}}</a></td>
+                    <td> <a href="{{ url_for('turnier.turnier_details', turnier_id=turnier['id']) }}">{{ turnier['name'] }}</a></td>
                     <td>{{ turnier['datumDerAustragung'] }}</td>
                 </tr>
                 {% endfor %}

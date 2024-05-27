@@ -5,18 +5,18 @@ from wtforms.validators import DataRequired
 class TurnierForm(FlaskForm):
     name = StringField(label='Name', validators=[DataRequired()])
     datumDerAustragung = DateField(label='Datum der Austragung', validators=[DataRequired()])
-    submit = SubmitField(label="Anlegen")
+    submit = SubmitField(label="Update")
 
 class GruppeForm(FlaskForm):
     name = StringField(label='Name', validators=[DataRequired()])
-    submit = SubmitField(label="Anlegen")
+    submit = SubmitField(label="Update")
 
 class TeamForm(FlaskForm):
     name = StringField(label='Name', validators=[DataRequired()])
     punkte = IntegerField(label='Punkte')
     treffer = IntegerField(label='Treffer')
     gegentreffer = IntegerField(label='Gegentreffer')
-    submit = SubmitField(label="Anlegen")
+    submit = SubmitField(label="Update")
 
 class SpieleForm(FlaskForm):
     team1Id = IntegerField(label='Team 1 ID', validators=[DataRequired()])
@@ -25,4 +25,4 @@ class SpieleForm(FlaskForm):
     runde = IntegerField(label='Runde')
     toreT1 = IntegerField(label='Tore Team 1')
     toreT2 = IntegerField(label='Tore Team 2')
-    submit = SubmitField(label="Anlegen")
+    submit = SubmitField(label="Update")
