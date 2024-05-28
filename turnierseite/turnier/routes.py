@@ -139,3 +139,23 @@ def team_erstellen(turnier_id):
         turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
         #laden eines neuen html
         return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+
+@turnier.route('/team_entfernen/<turnier_id>/<team_id>')
+def team_entfernen(turnier_id, team_id):
+    spiele = Spiele.query.filter(Spiele.team1Id == team_id or Spiele.team2Id == team_id).all()
+    if spiele:
+        flash('es existieren noch Spiele für das Team')
+
+        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
+        # Render the updated template
+        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+
+    team = Team.query.get(team_id)
+    if team:
+        db.session.delete(team)
+        db.session.commit()
+
+        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
+        # Render the updated template
+        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+

@@ -17,7 +17,9 @@
                 <h4>Teams in der Gruppe:</h4>
                 <ul>
                     {% for team in gruppen_teams[gruppe.id] %}
-                    <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}</li>
+                    <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}
+                        <a class="" href="{{ url_for('turnier.team_entfernen', turnier_id=turnier.id, team_id=team.id) }}">Löschen</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
