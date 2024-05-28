@@ -29,5 +29,8 @@
         <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
         <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.team_erstellen', turnier_id=turnier.id) }}">Team Anlegen</a>
     </div>
+    <div class="container">
+        <a class="btn btn-danger btn-lg" href="{{ url_for('turnier.turnier_entfernen', turnier_id=turnier.id) }}">Turnier Löschen</a>
+    </div>
 </div>
 {% endblock %}

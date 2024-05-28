@@ -46,6 +46,21 @@ def turnier_erstellen():
         #laden eines neuen html
         return redirect(url_for('turnier.index'))
 
+@turnier.route('/turnier_entfernen/<turnier_id>')
+def turnier_entfernen(turnier_id):
+    gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()
+    if gruppen:
+        flash('es existieren noch Gruppen für das Turnier')
+
+        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
+        # Render the updated template
+        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+
+    turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+    if turnier:
+        db.session.delete(turnier)
+        db.session.commit()
+        return redirect(url_for('turnier.index'))
 
 @turnier.route('/turnier_details/<turnier_id>', methods=['GET', 'POST'])
 def turnier_details(turnier_id):
