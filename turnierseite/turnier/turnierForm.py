@@ -12,10 +12,8 @@ class GruppeForm(FlaskForm):
     submit = SubmitField(label="Update")
 
 class TeamForm(FlaskForm):
+    gruppe = StringField(label='Gruppe', validators=[DataRequired()])
     name = StringField(label='Name', validators=[DataRequired()])
-    punkte = IntegerField(label='Punkte')
-    treffer = IntegerField(label='Treffer')
-    gegentreffer = IntegerField(label='Gegentreffer')
     submit = SubmitField(label="Update")
 
 class SpieleForm(FlaskForm):

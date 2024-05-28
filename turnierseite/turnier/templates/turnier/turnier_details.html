@@ -2,23 +2,32 @@
 {% from 'bootstrap/form.html' import render_form %}
 {% block title %}Turnier Anlage{% endblock %}
 {% block content %}
-<!--Using Boostrap classes for styling here-->
+<!--Using Bootstrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
         {{ render_form(turnier_form) }}
     </div>
     <div class="container">
-		<h2>Übersicht der Gruppen:</h2>
+        <h2>Übersicht der Gruppen:</h2>
         {% for gruppe in gruppen %}
         <div class="row">
-            <h3>{{gruppe['name']}}</h3>
-            <a class="" href=" {{ url_for('turnier.gruppe_entfernen', turnier_id=turnier['id'], gruppe_id=gruppe['id']) }} ">Löschen</a>
+            <h3>{{ gruppe.id }}: {{ gruppe.name }}</h3>
+            <a class="" href="{{ url_for('turnier.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
+            <div class="container">
+                <h4>Teams in der Gruppe:</h4>
+                <ul>
+                    {% for team in gruppen_teams[gruppe.id] %}
+                    <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         {% endfor %}
     </div>
     {% block turnier_anlage %}{% endblock %}
     <div class="container">
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.gruppe_erstellen', turnier_id=turnier['id']) }} ">Gruppe Anlegen</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.team_erstellen', turnier_id=turnier.id) }}">Team Anlegen</a>
     </div>
 </div>
 {% endblock %}
