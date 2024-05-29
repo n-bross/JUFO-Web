@@ -14,7 +14,8 @@
             <h3>{{ gruppe.id }}: {{ gruppe.name }}</h3>
             <a class="" href="{{ url_for('turnier.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
             <div class="container">
-                <h4>Teams in der Gruppe:</h4>
+                <h4 class="">Teams in der Gruppe:</h4>
+                <a class="btn btn-primary" href="{{ url_for('turnier.spielplan_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Generieren</a>
                 <ul>
                     {% for team in gruppen_teams[gruppe.id] %}
                     <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}
