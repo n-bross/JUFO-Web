@@ -224,7 +224,7 @@ def spielplan_erstellen(turnier_id, gruppe_id):
             for spiel in runden_aufsetzen[runde]:
                 t1_id, t1_name = spiel[0].split('. ')
                 t2_id, t2_name = spiel[1].split('. ')
-                spiel = Spiele(team1Id=int(t1_id), team1Name=t1_name, team2Id=t2_id, team2Name=t2_name, gespielt=0, runde=runde, toreT1=0, toreT2=0)
+                spiel = Spiele(team1Id=int(t1_id), team1Name=t1_name, team2Id=t2_id, team2Name=t2_name, gespielt=0, runde=runde, toreT1=0, toreT2=0, gruppeId=gruppe_id)
                 db.session.add(spiel)
         db.session.commit()
     turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)

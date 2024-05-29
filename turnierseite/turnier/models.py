@@ -50,6 +50,7 @@ class Spiele(db.Model):
     __tablename__ = 'spiele'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    gruppeId = db.Column(db.Integer, db.ForeignKey('gruppe.id', name='fk_spiele_gruppe'))
     team1Id = db.Column(db.Integer, db.ForeignKey('teams.id', name='fk_spiele_team1'))
     team1Name = db.Column(db.Text(100), nullable=False)
     team2Id = db.Column(db.Integer, db.ForeignKey('teams.id', name='fk_spiele_team2'))

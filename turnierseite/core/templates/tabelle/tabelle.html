@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}{{ turnier.name }}{% endblock %}
+{% block content %}
+<!--Using Bootstrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h2>Übersicht der Gruppen:</h2>
+        {% for gruppe in gruppen %}
+        <div class="row">
+            <h3>{{ gruppe.name }}</h3>
+            <div class="container">
+                <h4 class="">Tabelle:</h4>
+                <ul>
+                    {% for team in gruppen_teams[gruppe.id] %}
+                    <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}</li>
+                    {% endfor %}
+                </ul>
+                <h4 class="">Spielplan:</h4>
+                    {% for runde in gruppen_spiele[gruppe.id] %}
+                    <p>Runde: {{runde}}</p>
+                        {% for spiel in gruppen_spiele[gruppe.id][runde] %}
+                        <p>{{spiel.team1Name}} vs. {{spiel.team2Name}}</p>
+                        <p>{{spiel.toreT1}} : {{spiel.toreT2}}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% block turnier_anlage %}{% endblock %}
+</div>
+{% endblock %}

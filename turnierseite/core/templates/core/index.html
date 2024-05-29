@@ -4,11 +4,11 @@
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
 	<div class="container">
-		<h1>Welcome</h1>
+		<h5>Wilkommen bei der Turnier ansicht des Jugendforums Grafing</h5>
 	</div>
 	<div class="container">
 		{% for turnier in alle_turniere %}
-		<h2>{{ turnier['name'] }}</h2>
+		<h3><a href="{{ url_for('core.scoreboard', turnier_id=turnier.id) }}">{{ turnier['name'] }}</a></h3>
 		{% endfor %}
 	</div>
 </div>
