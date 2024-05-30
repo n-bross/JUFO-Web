@@ -7,24 +7,56 @@
     <div class="container">
         <h2>Übersicht der Gruppen:</h2>
         {% for gruppe in gruppen %}
-        <div class="row">
-            <h3>{{ gruppe.name }}</h3>
-            <div class="container">
-                <h4 class="">Tabelle:</h4>
-                <ul>
-                    {% for team in gruppen_teams[gruppe.id] %}
-                    <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}</li>
-                    {% endfor %}
-                </ul>
-                <h4 class="">Spielplan:</h4>
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>{{ gruppe.name }}</h3>
+                <div class="container">
+                    <h4>Tabelle:</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Punkte</th>
+                                    <th>Tore</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for team in gruppen_teams[gruppe.id] %}
+                                <tr>
+                                    <td><strong>{{ team.name }}</strong></td>
+                                    <td>{{ team.punkte }}</td>
+                                    <td>{{ team.treffer }}:{{ team.gegentreffer }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Spielplan:</h4>
                     {% for runde in gruppen_spiele[gruppe.id] %}
-                    <p>Runde: {{runde}}</p>
-                        {% for spiel in gruppen_spiele[gruppe.id][runde] %}
-                        <p>{{spiel.team1Name}} vs. {{spiel.team2Name}}</p>
-                        <p>{{spiel.toreT1}} : {{spiel.toreT2}}</p>
-                        {% endfor %}
+                    <div class="table-responsive mb-3">
+                        <p><strong>Runde: {{ runde }}</strong></p>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Team 1</th>
+                                    <th>Team 2</th>
+                                    <th>Ergebnis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for spiel in gruppen_spiele[gruppe.id][runde] %}
+                                <tr class="{% if spiel.gespielt == 1 %}bg-success text-white{% endif %}">
+                                    <td>{{ spiel.team1Name }}</td>
+                                    <td>{{ spiel.team2Name }}</td>
+                                    <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
         {% endfor %}
