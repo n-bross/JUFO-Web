@@ -7,15 +7,15 @@
         <h2>Übersicht der Gruppen:</h2>
         {% for gruppe in gruppen %}
         <div class="row">
-            <h3>{{ gruppe.id }}: {{ gruppe.name }}</h3>
-            <a class="" href="{{ url_for('turnier.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
+            <h3>ID:{{ gruppe.id }}    {{ gruppe.name }}</h3>
+            <a class="" href="{{ url_for('gruppe.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
             <div class="container">
                 <h4 class="">Teams in der Gruppe:</h4>
-                <a class="btn btn-primary" href="{{ url_for('turnier.spielplan_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Generieren</a>
+                <a class="btn btn-primary" href="{{ url_for('spielplan.spielplan_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Generieren</a>
                 <ul>
                     {% for team in gruppen_teams[gruppe.id] %}
                     <li>{{ team.name }} - Punkte: {{ team.punkte }}, Treffer: {{ team.treffer }}, Gegentreffer: {{ team.gegentreffer }}
-                        <a class="" href="{{ url_for('turnier.team_entfernen', turnier_id=turnier.id, team_id=team.id) }}">Löschen</a>
+                        <a class="" href="{{ url_for('team.team_entfernen', turnier_id=turnier.id, team_id=team.id) }}">Löschen</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -25,8 +25,8 @@
     </div>
     {% block turnier_anlage %}{% endblock %}
     <div class="container">
-        <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
-        <a class="btn btn-primary btn-lg" href="{{ url_for('turnier.team_erstellen', turnier_id=turnier.id) }}">Team Anlegen</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('gruppe.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('team.team_erstellen', turnier_id=turnier.id) }}">Team Anlegen</a>
     </div>
     <div class="container">
         <a class="btn btn-danger btn-lg" href="{{ url_for('turnier.turnier_entfernen', turnier_id=turnier.id) }}">Turnier Löschen</a>
