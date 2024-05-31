@@ -24,9 +24,8 @@ def gruppe_erstellen(turnier_id):
 def gruppe_entfernen(turnier_id, gruppe_id):
     teams = Team.query.filter(Team.gruppeId == gruppe_id).all()
     if teams:
-        flash('es existieren noch Teams für die Gruppe')
-        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+        flash('Es existieren noch Teams für die Gruppe')
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
 
     gruppe = Gruppe.query.get(gruppe_id)
     if gruppe:
@@ -34,5 +33,7 @@ def gruppe_entfernen(turnier_id, gruppe_id):
         db.session.commit()
     else:
         flash(f"Gruppe mit id {gruppe_id} nicht gefunden.")
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
+
     turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
     return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)

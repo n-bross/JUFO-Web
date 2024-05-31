@@ -65,14 +65,14 @@ def create_app():
     from turnierseite.turnier.routes.turnier import turnier
     from turnierseite.turnier.routes.gruppe import gruppe
     from turnierseite.turnier.routes.team import team
-    from turnierseite.turnier.routes.spielplan import spielplan
+    from turnierseite.turnier.routes.spiele import spiele
 
     app.register_blueprint(core, url_prefix='/')
     app.register_blueprint(user_handeling, url_prefix='/user_handeling', bcrypt=bcrypt)
     app.register_blueprint(turnier, url_prefix='/turnier')
     app.register_blueprint(gruppe, url_prefix='/gruppe')
     app.register_blueprint(team, url_prefix='/team')
-    app.register_blueprint(spielplan, url_prefix='/spielplan')
+    app.register_blueprint(spiele, url_prefix='/spiele')
 
     csrf.exempt(core)
     csrf.exempt(user_handeling)

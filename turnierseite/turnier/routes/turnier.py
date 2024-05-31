@@ -39,8 +39,7 @@ def turnier_entfernen(turnier_id):
     gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()
     if gruppen:
         flash('es existieren noch Gruppen für das Turnier')
-        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
 
     turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
     if turnier:

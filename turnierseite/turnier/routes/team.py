@@ -1,5 +1,5 @@
 # turnierseite/turnier/routes/team.py
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from turnierseite.turnier.models import Turnier, Gruppe, Team, Spiele
 from turnierseite.turnier.turnierForm import TeamForm
 from turnierseite.app import db
@@ -21,6 +21,7 @@ def team_erstellen(turnier_id):
             db.session.commit()
         else:
             flash(f"Die Ausgewählte Gruppe existiert nicht.")
+            return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
         turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
         return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
 
@@ -28,9 +29,8 @@ def team_erstellen(turnier_id):
 def team_entfernen(turnier_id, team_id):
     spiele = Spiele.query.filter(Spiele.team1Id == team_id).all()
     if spiele:
-        flash('es existieren noch Spiele für das Team')
-        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
+        flash('Es existieren noch Spiele für das Team')
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
 
     team = Team.query.get(team_id)
     if team:

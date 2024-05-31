@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}{{ turnier.name }}{% endblock %}
+{% block content %}
+<!--Using Bootstrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h2>Übersicht der Gruppen:</h2>
+        {% for gruppe in gruppen %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="row">
+                    <button type="button" class="btn btn-primary btn-lg mb-3" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
+                        {{ gruppe.name }}
+                    </button>
+                </div>
+                <div class="collapse" id="collapseGruppe{{ gruppe.id }}">
+                    <h4>Tabelle:</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Punkte</th>
+                                    <th>Tore</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for team in gruppen_teams[gruppe.id] %}
+                                <tr>
+                                    <td><strong>{{ team.name }}</strong></td>
+                                    <td>{{ team.punkte }}</td>
+                                    <td>{{ team.treffer }}:{{ team.gegentreffer }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Spielplan:</h4>
+                    {% for runde in gruppen_spiele[gruppe.id] %}
+                    <div class="mb-3">
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRunde{{ gruppe.id }}{{ runde }}">
+                            Runde: {{ runde }}
+                        </button>
+                        <div class="collapse" id="collapseRunde{{ gruppe.id }}{{ runde }}">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Team 1</th>
+                                            <th>Team 2</th>
+                                            <th>Ergebnis</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for spiel in gruppen_spiele[gruppe.id][runde] %}
+                                        <tr class="{% if spiel.gespielt == 1 %}bg-success text-white{% endif %}">
+                                            <td>{{ spiel.team1Name }}</td>
+                                            <td>{{ spiel.team2Name }}</td>
+                                            <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% block turnier_anlage %}{% endblock %}
+</div>
+{% endblock %}
