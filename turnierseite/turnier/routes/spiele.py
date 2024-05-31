@@ -1,9 +1,10 @@
 # turnierseite/turnier/routes/spiele.py
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 
 import random
 
 from turnierseite.turnier.models import Turnier, Gruppe, Team, Spiele
+from turnierseite.turnier.turnierForm import SpieleForm
 from turnierseite.turnier.routes.turnier import lade_turnier_daten
 from turnierseite.app import db
 
@@ -91,24 +92,85 @@ def spiele_overview(turnier_id):
     return render_template('spiele/spiele_overview.html', turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams, gruppen_spiele=gruppen_spiele)
 
 
-#spiel eintragen
-#@team.route('/team_erstellen/<turnier_id>', methods=['GET', 'POST'])
-#def team_erstellen(turnier_id):
-#    team_form = TeamForm()
-#    if request.method == 'GET':
-#        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-#        return render_template("team/team_erstellen.html", turnier=turnier, turnier_form=turnier_form, team_form=team_form, gruppen=gruppen, gruppen_teams=gruppen_teams)
-#    elif request.method == 'POST':
-#        gruppen_in_turnier = [gruppe.id for gruppe in Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()]
-#        if int(team_form.gruppe.data) in gruppen_in_turnier:
-#            team = Team(gruppeId=team_form.gruppe.data, name=team_form.name.data, punkte=0, treffer=0, gegentreffer=0)
-#            db.session.add(team)
-#            db.session.commit()
-#        else:
-#            flash(f"Die Ausgewählte Gruppe existiert nicht.")
-#            return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
-#        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-#        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)#
+# Route to enter game results
+@spiele.route('/spiele_eintragen/<turnier_id>/<gruppe_id>/<spiele_id>', methods=['GET', 'POST'])
+def spiele_eintragen(turnier_id, gruppe_id, spiele_id):
+    spiel = Spiele.query.filter(Spiele.id == spiele_id).first()
+    spiel_form = SpieleForm(obj=spiel)
+
+    if request.method == 'GET':
+        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
+        return render_template("spiele/spiele_eintragen.html", turnier=turnier,spiel=spiel, spiel_form=spiel_form)
+
+    elif request.method == 'POST':
+        if not spiel_form.validate_on_submit():
+            flash('Ungültige Eingabe')
+            return redirect(url_for('spiele.spiele_eintragen', turnier_id=turnier_id, gruppe_id=gruppe_id, spiele_id=spiele_id))
+
+        # Validate score inputs
+        if spiel_form.toreT1.data < 0 or spiel_form.toreT2.data < 0:
+            flash('Ungültige Tor eingabe')
+            return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
+
+        # Load teams
+        team1 = Team.query.get(spiel.team1Id)
+        team2 = Team.query.get(spiel.team2Id)
+
+        print(f"spiel.gespielt:{spiel.gespielt}")
+        if spiel.gespielt == '1':
+            reset_gespieltes_spiel(team1, team2, spiel.toreT1, spiel.toreT2)
+        else:
+            spiel.gespielt = 1
+
+        # Update game scores
+        spiel.toreT1 = spiel_form.toreT1.data
+        spiel.toreT2 = spiel_form.toreT2.data
+
+        # Adjust points based on the new scores
+        if spiel.toreT1 > spiel.toreT2:
+            anpasung_punkte(team1, team2, 3, 0)
+        elif spiel.toreT1 < spiel.toreT2:
+            anpasung_punkte(team1, team2, 0, 3)
+        else:
+            anpasung_punkte(team1, team2, 1, 1)
+
+        # Update teams' scores
+        team1.treffer += spiel.toreT1
+        team1.gegentreffer += spiel.toreT2
+        team2.treffer += spiel.toreT2
+        team2.gegentreffer += spiel.toreT1
+
+        # Commit changes to the database
+        db.session.add(team1)
+        db.session.add(team2)
+        db.session.add(spiel)
+        db.session.commit()
+
+        flash('Spielergebnis erfolgreich eingetragen')
+        return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
+
+# Function to reset a played game's impact on teams
+def reset_gespieltes_spiel(team1, team2, alt_toreT1, alt_toreT2):
+    if alt_toreT1 > alt_toreT2:
+        anpasung_punkte(team1, team2, -3, 0)
+    elif alt_toreT1 < alt_toreT2:
+        anpasung_punkte(team1, team2, 0, -3)
+    else:
+        anpasung_punkte(team1, team2, -1, -1)
+
+    team1.treffer -= alt_toreT1
+    team1.gegentreffer -= alt_toreT2
+    team2.treffer -= alt_toreT2
+    team2.gegentreffer -= alt_toreT1
+
+    db.session.add(team1)
+    db.session.add(team2)
+    db.session.commit()
+
+# Function to adjust points between two teams
+def anpasung_punkte(team1, team2, points1, points2):
+    team1.punkte += points1
+    team2.punkte += points2
 
 #spiel löschen, wenn es nicht gespielt werden sollte
 #@team.route('/team_entfernen/<turnier_id>/<team_id>')

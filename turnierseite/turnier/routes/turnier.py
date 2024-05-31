@@ -40,7 +40,6 @@ def turnier_entfernen(turnier_id):
     if gruppen:
         flash('es existieren noch Gruppen für das Turnier')
         return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
-
     turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
     if turnier:
         db.session.delete(turnier)

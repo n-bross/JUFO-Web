@@ -50,6 +50,7 @@
                                             <th>Team 1</th>
                                             <th>Team 2</th>
                                             <th>Ergebnis</th>
+                                            <th>Eintragen</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -58,6 +59,9 @@
                                             <td>{{ spiel.team1Name }}</td>
                                             <td>{{ spiel.team2Name }}</td>
                                             <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
+                                            <td>
+                                                <a class="btn btn-primary" href="{{ url_for('spiele.spiele_eintragen', turnier_id=turnier.id, gruppe_id=gruppe.id, spiele_id=spiel.id) }}">Eintragen</a>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -71,6 +75,5 @@
         </div>
         {% endfor %}
     </div>
-    {% block turnier_anlage %}{% endblock %}
 </div>
 {% endblock %}
