@@ -91,6 +91,23 @@ def spiele_overview(turnier_id):
     turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
     return render_template('spiele/spiele_overview.html', turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams, gruppen_spiele=gruppen_spiele)
 
+#spiel löschen, wenn noch nicht gespielt wurde
+@spiele.route('/spiele_loeschen/<turnier_id>/<gruppe_id>')
+def spiele_loeschen(turnier_id, gruppe_id):
+    gespielte_spiele = Spiele.query.filter(Spiele.gruppeId == gruppe_id, Spiele.gespielt == 1).all()
+    if gespielte_spiele:
+        flash('es existieren Bereits gespielte Spiele')
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
+
+    spiele = Spiele.query.filter(Spiele.gruppeId == gruppe_id).all()
+    if spiele:
+        for spiel in spiele:
+            db.session.delete(spiel)
+        db.session.commit()
+        flash(f'Die spiele für die Gruppe: {gruppe_id} wurden gelöscht')
+
+    turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
+    return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
 
 # Route to enter game results
 @spiele.route('/spiele_eintragen/<turnier_id>/<gruppe_id>/<spiele_id>', methods=['GET', 'POST'])
@@ -171,18 +188,3 @@ def reset_gespieltes_spiel(team1, team2, alt_toreT1, alt_toreT2):
 def anpasung_punkte(team1, team2, points1, points2):
     team1.punkte += points1
     team2.punkte += points2
-
-#spiel löschen, wenn es nicht gespielt werden sollte
-#@team.route('/team_entfernen/<turnier_id>/<team_id>')
-#def team_entfernen(turnier_id, team_id):
-#    spiele = Spiele.query.filter(Spiele.team1Id == team_id).all()
-#    if spiele:
-#        flash('es existieren noch Spiele für das Team')
-#        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
-#
-#    team = Team.query.get(team_id)
-#    if team:
-#        db.session.delete(team)
-#        db.session.commit()
-#        turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
-#        return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)

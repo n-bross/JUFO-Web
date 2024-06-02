@@ -26,7 +26,8 @@
                     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
                         {{ gruppe.name }}
                     </button>
-                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spiele Generieren</a>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Generieren</a>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_loeschen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Löschen</a>
                     <a class="btn btn-danger btn-lg" href="{{ url_for('gruppe.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
                 </div>
                 <div class="collapse" id="collapseGruppe{{ gruppe.id }}">
