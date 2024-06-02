@@ -61,6 +61,7 @@
                                             <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
                                             <td>
                                                 <a class="btn btn-primary" href="{{ url_for('spiele.spiele_eintragen', turnier_id=turnier.id, gruppe_id=gruppe.id, spiele_id=spiel.id) }}">Eintragen</a>
+                                                <a class="btn btn-danger" href="{{ url_for('spiele.spiel_ergebnis_loeschen', turnier_id=turnier.id, gruppe_id=gruppe.id, spiele_id=spiel.id) }}">Ergebnis löschen</a>
                                             </td>
                                         </tr>
                                         {% endfor %}

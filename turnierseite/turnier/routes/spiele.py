@@ -166,6 +166,34 @@ def spiele_eintragen(turnier_id, gruppe_id, spiele_id):
         flash('Spielergebnis erfolgreich eingetragen')
         return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
 
+
+# Route to enter game results
+@spiele.route('/spiel_ergebnis_loeschen/<turnier_id>/<gruppe_id>/<spiele_id>', methods=['GET', 'POST'])
+def spiel_ergebnis_loeschen(turnier_id, gruppe_id, spiele_id):
+    spiel = Spiele.query.filter(Spiele.id == spiele_id).first()
+    # Load teams
+    team1 = Team.query.get(spiel.team1Id)
+    team2 = Team.query.get(spiel.team2Id)
+
+    if spiel.gespielt == '1':
+        spiel.gespielt = '0'
+        reset_gespieltes_spiel(team1, team2, spiel.toreT1, spiel.toreT2)
+
+    return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
+
+### Temp eine Funktion um aus dem Frontend Teams zurück zusetzen
+##@spiele.route('/temp/<turnier_id>/<gruppe_id>', methods=['GET', 'POST'])
+##def temp(turnier_id, gruppe_id):
+##    teams = Team.query.filter(Team.gruppeId == gruppe_id).all()
+##
+##    for team in teams:
+##        team.punkte = 0
+##        team.treffer = 0
+##        team.gegentreffer = 0
+##    db.session.commit()
+##
+##    return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
+
 # Function to reset a played game's impact on teams
 def reset_gespieltes_spiel(team1, team2, alt_toreT1, alt_toreT2):
     if alt_toreT1 > alt_toreT2:
