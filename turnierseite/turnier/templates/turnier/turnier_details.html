@@ -2,7 +2,13 @@
 {% block title %}Turnier Anlage{% endblock %}
 {% block content %}
 <!-- Using Bootstrap classes for styling here -->
-<div class="jumbotron">
+<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
+    <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('turnier.index') }} ">Turnier</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+</nav>
     <div class="container">
         <div class="btn-group mb-3" role="group">
             <a class="btn btn-outline-primary btn-lg" href="{{ url_for('gruppe.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
@@ -30,7 +36,7 @@
                     <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_loeschen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Löschen</a>
                     <a class="btn btn-danger btn-lg" href="{{ url_for('gruppe.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
                 </div>
-                <div class="collapse" id="collapseGruppe{{ gruppe.id }}">
+                <div class="collapse show" id="collapseGruppe{{ gruppe.id }}">
                     <h4>Tabelle:</h4>
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -62,5 +68,4 @@
         {% endfor %}
     </div>
     {% block turnier_anlage %}{% endblock %}
-</div>
 {% endblock %}

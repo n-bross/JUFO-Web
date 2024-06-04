@@ -3,6 +3,13 @@
 {% block title %}Turnier Anlage{% endblock %}
 {% block content %}
 <!--Using Boostrap classes for styling here-->
+<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
+    <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('turnier.index') }} ">Turnier</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+</nav>
 <div class="jumbotron">
     <div class="container">
         <h1>Turnier</h1>

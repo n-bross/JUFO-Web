@@ -15,6 +15,10 @@ spiele = Blueprint('spiele', __name__, template_folder='../templates')
 @login_required
 def spiele_erstellen(turnier_id, gruppe_id):
     team = Team.query.filter(Team.gruppeId == gruppe_id).first()
+    if not team:
+        flash('Es existieren keine Teams für die Gruppe')
+        return redirect(url_for('turnier.turnier_details', turnier_id=turnier_id))
+
     spiele = Spiele.query.filter(Spiele.team1Id == team.id).all()
     if spiele:
         flash('Es existieren bereits Spiele für die Gruppe')
@@ -186,19 +190,6 @@ def spiel_ergebnis_loeschen(turnier_id, gruppe_id, spiele_id):
         reset_gespieltes_spiel(team1, team2, spiel.toreT1, spiel.toreT2)
 
     return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
-
-### Temp eine Funktion um aus dem Frontend Teams zurück zusetzen
-##@spiele.route('/temp/<turnier_id>/<gruppe_id>', methods=['GET', 'POST'])
-##def temp(turnier_id, gruppe_id):
-##    teams = Team.query.filter(Team.gruppeId == gruppe_id).all()
-##
-##    for team in teams:
-##        team.punkte = 0
-##        team.treffer = 0
-##        team.gegentreffer = 0
-##    db.session.commit()
-##
-##    return redirect(url_for('spiele.spiele_overview', turnier_id=turnier_id))
 
 # Function to reset a played game's impact on teams
 def reset_gespieltes_spiel(team1, team2, alt_toreT1, alt_toreT2):
