@@ -3,6 +3,13 @@
 {% block title %}{{ turnier.name }}{% endblock %}
 {% block content %}
 <!--Using Bootstrap classes for styling here-->
+<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
+    <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+    <a class="navbar-brand nav-text">/</a>
+    <a class="navbar-brand nav-text" href="{{ url_for('core.gruppen_des_turnieres', turnier_id=turnier.id) }}">Gruppen</a>
+    <a class="navbar-brand nav-text">/</a>
+    <a class="navbar-brand nav-text" href="{{ url_for('core.tabelle_einer_gruppe', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">{{ gruppe.name }}</a>
+</nav>
 <div id="scoreboard">
     <div class="col">
         <h1 class="mt-5 mb-3 title-turnier">{{ turnier.name }}</h1>
@@ -29,6 +36,39 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div>
+        <h4>Spielplan:</h4>
+        {% for runde in alle_runden.keys() %}
+        <div class="mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRunde{{ gruppe.id }}{{ runde }}">
+                Runde: {{ runde }}
+            </button>
+            <div class="collapse show" id="collapseRunde{{ gruppe.id }}{{ runde }}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Team 1</th>
+                                <th>Team 2</th>
+                                <th>Ergebnis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for spiel in alle_runden[runde] %}
+                            <tr class="{% if spiel.gespielt == '1' %}bg-success text-white{% endif %}">
+                                <td>{{ spiel.team1Name }}</td>
+                                <td>{{ spiel.team2Name }}</td>
+                                <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
         </div>
     </div>
 </div>

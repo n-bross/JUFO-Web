@@ -4,12 +4,23 @@
 <!--Using Boostrap classes for styling here-->
 <div class="mt-5 mb-3">
 	<div class="container">
-		<h5 class="title-turnier">Wilkommen bei der Turnier ansicht des Jugendforums Grafing</h5>
+		<h1 class="title-turnier">Turnierseite JuFo Grafing</h1>
 	</div>
 	<div class="container">
-		{% for turnier in alle_turniere %}
-		<h3><a href="{{ url_for('core.gruppen_des_turnieres', turnier_id=turnier.id) }}">{{ turnier['name'] }}</a></h3>
-		{% endfor %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Turnier</th>
+					<th>Austragung</th>
+				</tr>
+			</thead>
+            	<tbody>
+					{% for turnier in alle_turniere %}
+            	    <tr>
+						<td><a href="{{ url_for('core.gruppen_des_turnieres', turnier_id=turnier.id) }}">{{ turnier.name }}</a></td>
+						<td>{{ turnier.datumDerAustragung }}</td>
+					{% endfor %}
+		</table>
 	</div>
 </div>
 {% endblock %}

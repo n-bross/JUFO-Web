@@ -19,18 +19,17 @@
     <script defer src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 
-    <link rel="stylesheet" href="../static/styles/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 </head>
-
 <body>
-        <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
-            <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
-            <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
-        </nav>
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
+        <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+        <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+    </nav>
 	    {% for message in get_flashed_messages() %}
             <div class="alert alert-info alert-dismissible fade show row" role="alert">
 	        	<div class="col-11">
