@@ -57,7 +57,7 @@
                         </thead>
                         <tbody>
                             {% for spiel in alle_runden[runde] %}
-                            <tr class="{% if spiel.gespielt == '1' %}bg-success text-white{% endif %}">
+                            <tr class="{% if spiel.gespielt == '1' %}gameplayed{% endif %}">
                                 <td>{{ spiel.team1Name }}</td>
                                 <td>{{ spiel.team2Name }}</td>
                                 <td>{{ spiel.toreT1 }} : {{ spiel.toreT2 }}</td>
