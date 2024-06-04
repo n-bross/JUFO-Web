@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}{{ turnier.name }}{% endblock %}
+{% block content %}
+<!--Using Bootstrap classes for styling here-->
+<div id="scoreboard">
+    <div class="col">
+    <h1 class="mt-5 mb-3 title-turnier">{{ turnier.name }}</h1>
+    </div>
+    <div class="container">
+        <h2 class="mb-4">Gruppenübersicht</h2>
+        {% for gruppe in gruppen %}
+        <div class="row mb-4">
+                <a type="button" class="btn btn-gruppe btn-lg mb-3" href="{{ url_for('core.tabelle_einer_gruppe', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">
+                    {{ gruppe.name }}
+                </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% block turnier_anlage %}{% endblock %}
+</div>
+{% endblock %}

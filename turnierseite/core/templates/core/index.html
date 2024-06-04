@@ -2,13 +2,13 @@
 {% block title %}Jufo Tuniere{% endblock %}
 {% block content %}
 <!--Using Boostrap classes for styling here-->
-<div class="jumbotron">
+<div class="mt-5 mb-3">
 	<div class="container">
-		<h5>Wilkommen bei der Turnier ansicht des Jugendforums Grafing</h5>
+		<h5 class="title-turnier">Wilkommen bei der Turnier ansicht des Jugendforums Grafing</h5>
 	</div>
 	<div class="container">
 		{% for turnier in alle_turniere %}
-		<h3><a href="{{ url_for('core.scoreboard', turnier_id=turnier.id) }}">{{ turnier['name'] }}</a></h3>
+		<h3><a href="{{ url_for('core.gruppen_des_turnieres', turnier_id=turnier.id) }}">{{ turnier['name'] }}</a></h3>
 		{% endfor %}
 	</div>
 </div>

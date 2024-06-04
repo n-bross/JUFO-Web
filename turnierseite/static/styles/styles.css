@@ -1,0 +1,38 @@
+.component {
+    background-color: lightgray;
+}
+
+#scoreboard {
+}
+
+.title-turnier {
+    font-family: "Bangers", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    color: #091581;
+    text-shadow: 3px 3px 0 #f7d30a;
+  }
+
+body {
+    margin: 4%;
+    background-color: white;
+}
+
+nav {
+    background-color: #434343;
+}
+
+.nav-text {
+    color: #f7d30a;
+    font-weight: bolder;
+}
+
+.btn-primary {
+    background-color: #091581;
+}
+.btn-gruppe {
+    border-color: #f7d30a;
+    border-radius: 10em;
+    border-width: 0.2em;
+}

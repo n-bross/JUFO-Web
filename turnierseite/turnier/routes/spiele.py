@@ -1,5 +1,6 @@
 # turnierseite/turnier/routes/spiele.py
 from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask_login import login_required
 
 import random
 
@@ -11,6 +12,7 @@ from turnierseite.app import db
 spiele = Blueprint('spiele', __name__, template_folder='../templates')
 
 @spiele.route('/spiele_erstellen/<turnier_id>/<gruppe_id>')
+@login_required
 def spiele_erstellen(turnier_id, gruppe_id):
     team = Team.query.filter(Team.gruppeId == gruppe_id).first()
     spiele = Spiele.query.filter(Spiele.team1Id == team.id).all()
@@ -51,6 +53,7 @@ def spiele_erstellen(turnier_id, gruppe_id):
     return render_template('turnier/turnier_details.html', turnier_form=turnier_form, turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams)
 
 @spiele.route('/spiele_overview/<turnier_id>')
+@login_required
 def spiele_overview(turnier_id):
     gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()
     if not gruppen:
@@ -93,6 +96,7 @@ def spiele_overview(turnier_id):
 
 #spiel löschen, wenn noch nicht gespielt wurde
 @spiele.route('/spiele_loeschen/<turnier_id>/<gruppe_id>')
+@login_required
 def spiele_loeschen(turnier_id, gruppe_id):
     gespielte_spiele = Spiele.query.filter(Spiele.gruppeId == gruppe_id, Spiele.gespielt == 1).all()
     if gespielte_spiele:
@@ -111,6 +115,7 @@ def spiele_loeschen(turnier_id, gruppe_id):
 
 # Route to enter game results
 @spiele.route('/spiele_eintragen/<turnier_id>/<gruppe_id>/<spiele_id>', methods=['GET', 'POST'])
+@login_required
 def spiele_eintragen(turnier_id, gruppe_id, spiele_id):
     spiel = Spiele.query.filter(Spiele.id == spiele_id).first()
     spiel_form = SpieleForm(obj=spiel)
@@ -169,6 +174,7 @@ def spiele_eintragen(turnier_id, gruppe_id, spiele_id):
 
 # Route to enter game results
 @spiele.route('/spiel_ergebnis_loeschen/<turnier_id>/<gruppe_id>/<spiele_id>', methods=['GET', 'POST'])
+@login_required
 def spiel_ergebnis_loeschen(turnier_id, gruppe_id, spiele_id):
     spiel = Spiele.query.filter(Spiele.id == spiele_id).first()
     # Load teams

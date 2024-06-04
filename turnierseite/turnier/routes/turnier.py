@@ -1,5 +1,6 @@
 # turnierseite/turnier/routes/turnier.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from turnierseite.turnier.models import Turnier, Gruppe, Team
 from turnierseite.turnier.turnierForm import TurnierForm
 from turnierseite.app import db
@@ -19,11 +20,13 @@ def lade_turnier_daten(turnier_id):
     return turnier, turnier_form, gruppen, gruppen_teams
 
 @turnier.route('/')
+@login_required
 def index():
     alle_turniere = Turnier.query.all()
     return render_template("turnier/turnier_overview.html", alle_turniere=alle_turniere)
 
 @turnier.route('/turnier_erstellen', methods=['GET', 'POST'])
+@login_required
 def turnier_erstellen():
     turnier_form = TurnierForm()
     if request.method == 'GET':
@@ -35,6 +38,7 @@ def turnier_erstellen():
         return redirect(url_for('turnier.index'))
 
 @turnier.route('/turnier_entfernen/<turnier_id>')
+@login_required
 def turnier_entfernen(turnier_id):
     gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()
     if gruppen:
@@ -47,6 +51,7 @@ def turnier_entfernen(turnier_id):
         return redirect(url_for('turnier.index'))
 
 @turnier.route('/turnier_details/<turnier_id>', methods=['GET', 'POST'])
+@login_required
 def turnier_details(turnier_id):
     turnier, turnier_form, gruppen, gruppen_teams = lade_turnier_daten(turnier_id)
     if request.method == 'POST':

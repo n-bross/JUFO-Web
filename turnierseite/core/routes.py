@@ -62,3 +62,34 @@ def scoreboard(turnier_id):
 
     turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
     return render_template('tabelle/tabelle.html', turnier=turnier, gruppen=gruppen, gruppen_teams=gruppen_teams, gruppen_spiele=gruppen_spiele)
+
+@core.route('/gruppen_des_turnieres/<turnier_id>')
+def gruppen_des_turnieres(turnier_id):
+    gruppen = Gruppe.query.filter(Gruppe.turnierId == turnier_id).all()
+    if not gruppen:
+        flash('es existieren keine Gruppen für das Turnier')
+
+        turniere = Turnier.query.order_by(Turnier.datumDerAustragung.desc()).all()
+        return render_template('core/index.html', alle_turniere=turniere)
+
+    turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+    return render_template('tabelle/gruppen_des_turnieres.html', turnier=turnier, gruppen=gruppen)
+
+@core.route('/tabelle_einer_gruppe/<turnier_id>/<gruppe_id>')
+def tabelle_einer_gruppe(turnier_id, gruppe_id):
+    gruppe = Gruppe.query.filter(Gruppe.id == gruppe_id).first()
+    if not gruppe:
+        flash('es existieren keine Gruppen für das Turnier')
+
+        turniere = Turnier.query.order_by(Turnier.datumDerAustragung.desc()).all()
+        return render_template('core/index.html', alle_turniere=turniere)
+
+    teams = Team.query.filter(Team.gruppeId == gruppe_id).order_by(Team.punkte.desc()).all()
+    if not teams:
+        flash('es existieren keine Teams für die Gruppe {gruppe.name}')
+
+        turniere = Turnier.query.order_by(Turnier.datumDerAustragung.desc()).all()
+        return render_template('core/index.html', alle_turniere=turniere)
+
+    turnier = Turnier.query.filter(Turnier.id == turnier_id).first()
+    return render_template('tabelle/tabelle_einer_gruppe.html', turnier=turnier, gruppe=gruppe,teams=teams)

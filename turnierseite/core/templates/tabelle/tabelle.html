@@ -3,14 +3,17 @@
 {% block title %}{{ turnier.name }}{% endblock %}
 {% block content %}
 <!--Using Bootstrap classes for styling here-->
-<div class="jumbotron">
+<div id="scoreboard">
+    <div class="col">
+    <h1 class="mt-5 mb-3 title-turnier">{{ turnier.name }}</h1>
+    </div>
     <div class="container">
-        <h2>Übersicht der Gruppen:</h2>
+        <h2 class="mb-4">Gruppenübersicht</h2>
         {% for gruppe in gruppen %}
         <div class="row mb-4">
             <div class="col-12">
                 <div class="row">
-                    <button type="button" class="btn btn-primary btn-lg mb-3" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
+                    <button type="button" class="btn btn-gruppe btn-lg  dropdown-toggle mb-3" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
                         {{ gruppe.name }}
                     </button>
                 </div>
@@ -39,7 +42,7 @@
                     <h4>Spielplan:</h4>
                     {% for runde in gruppen_spiele[gruppe.id] %}
                     <div class="mb-3">
-                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRunde{{ gruppe.id }}{{ runde }}">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRunde{{ gruppe.id }}{{ runde }}">
                             Runde: {{ runde }}
                         </button>
                         <div class="collapse" id="collapseRunde{{ gruppe.id }}{{ runde }}">

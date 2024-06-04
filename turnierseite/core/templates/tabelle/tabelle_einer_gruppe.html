@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}{{ turnier.name }}{% endblock %}
+{% block content %}
+<!--Using Bootstrap classes for styling here-->
+<div id="scoreboard">
+    <div class="col">
+        <h1 class="mt-5 mb-3 title-turnier">{{ turnier.name }}</h1>
+        <h1 class="mt-5 mb-3 title-turnier">{{ gruppe.name }}</h1>
+    </div>
+    <div>
+        <h4>Tabelle:</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Punkte</th>
+                        <th>Tore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teams %}
+                    <tr>
+                        <td><strong>{{ team.name }}</strong></td>
+                        <td>{{ team.punkte }}</td>
+                        <td>{{ team.treffer }}:{{ team.gegentreffer }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

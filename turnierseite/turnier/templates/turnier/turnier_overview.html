@@ -3,6 +3,13 @@
 {% block content %}
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
+    <div>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('core.index') }} ">Home</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('turnier.index') }} ">Turnier</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+    </div>
 	<div class="container">
 		<h1>Turnier Dasboard</h1>
 	</div>
