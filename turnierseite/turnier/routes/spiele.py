@@ -11,9 +11,10 @@ from turnierseite.app import db
 
 spiele = Blueprint('spiele', __name__, template_folder='../templates')
 
-@spiele.route('/spiele_erstellen/<turnier_id>/<gruppe_id>')
+@spiele.route('/spiele_erstellen/<turnier_id>/<gruppe_id>/<nur_hinrunde>')
 @login_required
-def spiele_erstellen(turnier_id, gruppe_id):
+def spiele_erstellen(turnier_id, gruppe_id, nur_hinrunde):
+    print(nur_hinrunde)
     team = Team.query.filter(Team.gruppeId == gruppe_id).first()
     if not team:
         flash('Es existieren keine Teams für die Gruppe')
@@ -27,10 +28,18 @@ def spiele_erstellen(turnier_id, gruppe_id):
         teams_der_gruppe_objekte = Team.query.filter(Team.gruppeId == gruppe_id).all()
         teams_der_gruppe_str = [str(team.id) + ". " + team.name for team in teams_der_gruppe_objekte]
         paare_der_hinrunde = [(team_i, team_j) for index_i, team_i in enumerate(teams_der_gruppe_str) for index_j, team_j in enumerate(teams_der_gruppe_str[index_i+1:], start=index_i+1)]
-        paare_der_rueckrunde = [(team_j, team_i) for team_i, team_j in paare_der_hinrunde]
-        alle_runden = paare_der_hinrunde + paare_der_rueckrunde
+        if nur_hinrunde == 'h':
+            alle_runden = paare_der_hinrunde
+            anzahl_spiele = int(len(teams_der_gruppe_str) * (len(teams_der_gruppe_str) - 1) / 2)
+        elif nur_hinrunde == 'hr':
+            paare_der_rueckrunde = [(team_j, team_i) for team_i, team_j in paare_der_hinrunde]
+            alle_runden = paare_der_hinrunde + paare_der_rueckrunde
+            anzahl_spiele = len(teams_der_gruppe_str) * (len(teams_der_gruppe_str) - 1)
+
+        print(f"anzahl spiele: {anzahl_spiele}")
+        print(f"alle_runden: {alle_runden}")
+
         random.shuffle(alle_runden)
-        anzahl_spiele = len(teams_der_gruppe_str) * (len(teams_der_gruppe_str) - 1)
         runden_aufsetzen = {}
         runden_counter, spiele_counter = 0, 0
         while spiele_counter != anzahl_spiele:
