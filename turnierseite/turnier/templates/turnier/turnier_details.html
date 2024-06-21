@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Turnier Anlage{% endblock %}
+{% block content %}
+<!-- Using Bootstrap classes for styling here -->
+<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
+    <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('turnier.index') }} ">Turnier</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+    <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+</nav>
+    <div class="container">
+        <div class="btn-group mb-3" role="group">
+            <a class="btn btn-outline-primary btn-lg" href="{{ url_for('gruppe.gruppe_erstellen', turnier_id=turnier.id) }}">Gruppe Anlegen</a>
+            <a class="btn btn-outline-primary btn-lg" href="{{ url_for('team.team_erstellen', turnier_id=turnier.id) }}">Team Anlegen</a>
+            <a class="btn btn-outline-danger btn-lg" href="{{ url_for('turnier.turnier_entfernen', turnier_id=turnier.id) }}">Turnier Löschen</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-12">
+                <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_overview', turnier_id=turnier.id) }}">Spiele eintragen</a>
+            </div>
+        </div>
+        {% for gruppe in gruppen %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="btn-group mb-1" role="group">
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
+                        ID: {{ gruppe.id }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="collapse" data-bs-target="#collapseGruppe{{ gruppe.id }}">
+                        {{ gruppe.name }}
+                    </button>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id, nur_hinrunde='hr') }}">Hin-/Rückrunde Generieren</a>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_erstellen', turnier_id=turnier.id, gruppe_id=gruppe.id, nur_hinrunde='h') }}">Nur Hinrunde Generieren</a>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('spiele.spiele_loeschen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Spielplan Löschen</a>
+                    <a class="btn btn-danger btn-lg" href="{{ url_for('gruppe.gruppe_entfernen', turnier_id=turnier.id, gruppe_id=gruppe.id) }}">Löschen</a>
+                </div>
+                <div class="collapse show" id="collapseGruppe{{ gruppe.id }}">
+                    <h4>Tabelle:</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Punkte</th>
+                                    <th>Tore</th>
+                                    <th>Löschen?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for team in gruppen_teams[gruppe.id] %}
+                                <tr>
+                                    <td><strong>{{ team.name }}</strong></td>
+                                    <td>{{ team.punkte }}</td>
+                                    <td>{{ team.treffer }}:{{ team.gegentreffer }}</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{{ url_for('team.team_entfernen', turnier_id=turnier.id, team_id=team.id) }}">Löschen</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% block turnier_anlage %}{% endblock %}
+{% endblock %}

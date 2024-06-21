@@ -1,0 +1,23 @@
+{% extends "turnier/turnier_details.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}Turnier Anlage{% endblock %}
+{% block turnier_anlage %}
+<!--Using Boostrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h4>Spiel eintragen</h4>
+        <div class="row">
+            <div class="col-3">
+                <p>Team 1: {{ spiel.team1Name }}</p>
+            </div>
+            <div class="col-3">
+                <p> vs. </p>
+            </div>
+            <div class="col-3">
+                <p>Team 2: {{ spiel.team2Name }}</p>
+            </div>
+        </div>
+        {{ render_form(spiel_form) }}
+    </div>
+</div>
+{% endblock %}
