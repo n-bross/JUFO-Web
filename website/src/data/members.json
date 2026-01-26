@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Max Mustermann",
+    "role": "Vorsitzender",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Max",
+    "bio": "Max ist seit 2018 im Verein und leitet unser Turnier-Team. In seiner Freizeit liebt er Brettspiele und Programmieren.",
+    "hobbies": ["Schach", "Programmieren", "Brettspiele"],
+    "joinedYear": 2018,
+    "color": "#f97316"
+  },
+  {
+    "id": 2,
+    "name": "Anna Schmidt",
+    "role": "Stellvertreterin",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Anna",
+    "bio": "Anna organisiert unsere Events und sorgt dafür, dass alles reibungslos läuft. Sie ist das Herz unserer Gemeinschaft.",
+    "hobbies": ["Tanzen", "Kochen", "Fotografie"],
+    "joinedYear": 2019,
+    "color": "#8b5cf6"
+  },
+  {
+    "id": 3,
+    "name": "Tom Weber",
+    "role": "Kassenwart",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Tom",
+    "bio": "Tom behält den Überblick über unsere Finanzen und plant Budget für kommende Events.",
+    "hobbies": ["Fußball", "Gaming", "Musik"],
+    "joinedYear": 2020,
+    "color": "#22d3ee"
+  },
+  {
+    "id": 4,
+    "name": "Lisa Müller",
+    "role": "Schriftführerin",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa",
+    "bio": "Lisa dokumentiert unsere Aktivitäten und führt das Protokoll bei Sitzungen.",
+    "hobbies": ["Lesen", "Schreiben", "Yoga"],
+    "joinedYear": 2021,
+    "color": "#22c55e"
+  },
+  {
+    "id": 5,
+    "name": "Felix Bauer",
+    "role": "Eventmanager",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+    "bio": "Felix plant und koordiniert unsere Veranstaltungen. Er bringt immer neue kreative Ideen ein.",
+    "hobbies": ["Basketball", "Reisen", "Kochen"],
+    "joinedYear": 2019,
+    "color": "#eab308"
+  },
+  {
+    "id": 6,
+    "name": "Sophie Wagner",
+    "role": "Social Media",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie",
+    "bio": "Sophie managt unsere Social Media Kanäle und hält die Community auf dem Laufenden.",
+    "hobbies": ["Fotografie", "Design", "Reisen"],
+    "joinedYear": 2022,
+    "color": "#ef4444"
+  },
+  {
+    "id": 7,
+    "name": "Paul Hoffmann",
+    "role": "Technik",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Paul",
+    "bio": "Paul kümmert sich um unsere technische Ausstattung und hilft bei IT-Problemen.",
+    "hobbies": ["Gaming", "3D-Druck", "Arduino"],
+    "joinedYear": 2020,
+    "color": "#8b5cf6"
+  },
+  {
+    "id": 8,
+    "name": "Emma Fischer",
+    "role": "Mitglied",
+    "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
+    "bio": "Emma ist eines unserer engagiertesten Mitglieder und hilft bei vielen Projekten.",
+    "hobbies": ["Schwimmen", "Musik", "Kunst"],
+    "joinedYear": 2023,
+    "color": "#f97316"
+  }
+]
