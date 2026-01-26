@@ -8,7 +8,7 @@ export default function LandingPage() {
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 w-full z-50 px-8 py-6">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
                   <span className="text-brand-yellow font-bold text-lg">🦁</span>
@@ -17,6 +17,7 @@ export default function LandingPage() {
             </div>
             
             <div className="hidden md:flex items-center gap-10 font-medium text-sm text-black">
+               
                 <a href="#" className="hover:underline underline-offset-4 decoration-2">Events</a>
                 <a href="#" className="hover:underline underline-offset-4 decoration-2">Über uns</a>
                 <a href="#" className="hover:underline underline-offset-4 decoration-2">Galerie</a>
@@ -29,11 +30,10 @@ export default function LandingPage() {
       <section className="relative pt-28 pb-32 min-h-[85vh]">
         
         {/* Left Yellow Circle - Large, positioned behind text */}
-        <div className="absolute -top-[5%] -left-[5%] w-[45vw] h-[45vw] max-w-[1200px] max-h-[1200px] bg-brand-yellow rounded-full -z-10" />
+        <div className="absolute top-[-50%] -right-[-70%] w-[883px] h-[883px] bg-brand-yellow rounded-full flex"></div>
         
         {/* Right Yellow Circle - Massive, positioned for images to sit on */}
-        <div className="absolute top-[15%] -right-[15%] w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] bg-brand-yellow rounded-full -z-10" />
-
+        <div className="absolute w-[749px] h-[749px] max-w-[800px] max-h-[800px] bg-brand-yellow rounded-full -z-10" />
         <div className="max-w-[1400px] mx-auto px-8 grid md:grid-cols-2 gap-8 items-start pt-16">
           
           {/* Left Content - Text */}
