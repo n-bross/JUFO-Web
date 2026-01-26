@@ -1,0 +1,67 @@
+# GitHub Actions Workflow für React (Vite) Deployment auf GitHub Pages
+# Dieses Workflow baut das React-Projekt und deployt es automatisch auf GitHub Pages
+
+name: Deploy React App to GitHub Pages
+
+on:
+  # Trigger bei Push auf den main Branch
+  push:
+    branches:
+      - main
+  # Ermöglicht manuelles Auslösen über die GitHub Actions UI
+  workflow_dispatch:
+
+# Berechtigungen für GitHub Pages Deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Verhindert parallele Deployments
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build Job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: ./website
+        run: npm ci
+
+      - name: Build React App
+        working-directory: ./website
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload des Build-Ordners (Vite erstellt 'dist')
+          path: './website/dist'
+
+  # Deployment Job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
