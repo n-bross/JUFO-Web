@@ -15,6 +15,7 @@ import TurnierListPage from '@/features/tools/turnier/TurnierListPage';
 import NewTurnierPage from '@/features/tools/turnier/NewTurnierPage';
 import TurnierDetailPage from '@/features/tools/turnier/TurnierDetailPage';
 import EventManagementPage from '@/features/tools/events/EventManagementPage';
+import KalenderPage from '@/features/kalender/KalenderPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -58,17 +59,7 @@ export default function App() {
             <Route path="/tools/turnier/:id" element={<Protected><TurnierDetailPage /></Protected>} />
             <Route path="/tools/events" element={<Protected><EventManagementPage /></Protected>} />
 
-            {/* Member-only: Kalender – placeholder until calendar branch */}
-            <Route
-              path="/kalender"
-              element={
-                <Protected>
-                  <div className="pt-24 text-center text-black/40 font-medium p-8">
-                    Kalender folgt im nächsten Update.
-                  </div>
-                </Protected>
-              }
-            />
+            <Route path="/kalender" element={<Protected><KalenderPage /></Protected>} />
           </Routes>
         </Layout>
       </BrowserRouter>
