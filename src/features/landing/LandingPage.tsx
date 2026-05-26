@@ -3,6 +3,7 @@ import { motion, type Variants } from 'framer-motion';
 import { ArrowRight, Users, Calendar, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
+import { BearSilhouette } from '@/components/ui/BearSilhouette';
 import { EventCard } from '@/features/aktionen/EventCard';
 import { events } from '@/data/events';
 
@@ -46,6 +47,13 @@ export default function LandingPage() {
               </span>
             </motion.div>
 
+            <motion.div
+              variants={fadeUp}
+              className="flex h-32 w-32 items-center justify-center rounded-[1.5rem] border-4 border-black bg-brand-yellow shadow-[5px_5px_0_#000] md:hidden"
+            >
+              <BearSilhouette className="h-24 w-24 text-black" />
+            </motion.div>
+
             <motion.h1
               variants={fadeUp}
               className="text-6xl md:text-[5.5rem] font-extrabold leading-[0.95] tracking-tight text-black"
@@ -78,32 +86,26 @@ export default function LandingPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative h-[460px] hidden md:block"
+            className="relative h-[460px] hidden md:flex items-center justify-center"
           >
-            <div className="absolute left-[0%] top-[12%] w-44 h-60 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[-5deg] z-20 bg-black">
-              <img
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80"
-                className="w-full h-full object-cover"
-                alt="Jugendliche"
-              />
+            <div className="absolute inset-x-10 top-12 h-72 rotate-3 rounded-[2rem] border-4 border-black bg-brand-yellow shadow-[8px_8px_0_#000]" />
+            <div className="absolute inset-x-20 bottom-8 h-28 -rotate-2 rounded-[1.5rem] border-4 border-black bg-white shadow-[5px_5px_0_#000]" />
+
+            <BearSilhouette className="relative z-20 h-[360px] w-[360px] text-black drop-shadow-[8px_8px_0_rgba(0,0,0,0.18)]" />
+
+            <div className="absolute left-0 top-20 z-30 max-w-[170px] -rotate-6 rounded-[1rem] border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0_#000]">
+              <p className="text-xs font-bold uppercase tracking-wider text-black/50">Grafing</p>
+              <p className="text-lg font-extrabold leading-tight">Junge Ideen sichtbar machen</p>
             </div>
-            <div className="absolute left-[28%] top-[3%] w-48 h-64 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[6deg] z-30 bg-black">
-              <img
-                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400&q=80"
-                className="w-full h-full object-cover"
-                alt="Workshop"
-              />
+
+            <div className="absolute right-4 bottom-24 z-30 rotate-6 rounded-[1rem] border-2 border-black bg-brand-lilac px-4 py-3 shadow-[4px_4px_0_#000]">
+              <p className="text-3xl font-extrabold leading-none">50+</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-black/60">aktive Stimmen</p>
             </div>
-            <div className="absolute right-[0%] top-[6%] w-44 h-60 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[-3deg] z-40 bg-black">
-              <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80"
-                className="w-full h-full object-cover"
-                alt="Event"
-              />
-            </div>
-            <div className="absolute left-[38%] top-[0%] w-7 h-7 bg-brand-yellow rounded-full border-[3px] border-black z-50" />
-            <div className="absolute right-[14%] bottom-[18%] w-16 h-16 bg-brand-lilac rounded-full border-4 border-black z-50" />
-            <div className="absolute left-[5%] bottom-[10%] w-10 h-10 bg-brand-yellow rounded-full border-[3px] border-black z-50" />
+
+            <div className="absolute left-[36%] top-[2%] z-30 h-7 w-7 rounded-full border-[3px] border-black bg-white" />
+            <div className="absolute right-[12%] top-[9%] z-30 h-12 w-12 rounded-full border-4 border-black bg-brand-lilac" />
+            <div className="absolute left-[8%] bottom-[12%] z-30 h-10 w-10 rounded-full border-[3px] border-black bg-brand-yellow" />
           </motion.div>
         </div>
       </section>
@@ -178,6 +180,7 @@ export default function LandingPage() {
       <section className="py-20 px-6 bg-brand-black text-white relative overflow-hidden">
         <div className="absolute -right-32 -top-32 w-96 h-96 rounded-full bg-brand-yellow/10" />
         <div className="absolute -left-20 bottom-0 w-64 h-64 rounded-full bg-brand-lilac/10" />
+        <BearSilhouette className="pointer-events-none absolute -bottom-24 right-4 h-80 w-80 text-white/5" />
 
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
           <motion.div
@@ -298,9 +301,10 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
-            className="bg-brand-yellow rounded-[2rem] border-2 border-black shadow-[6px_6px_0_#000] p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8"
+            className="relative overflow-hidden bg-brand-yellow rounded-[2rem] border-2 border-black shadow-[6px_6px_0_#000] p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8"
           >
-            <div className="space-y-3 text-center md:text-left">
+            <BearSilhouette className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 text-black/10" />
+            <div className="relative z-10 space-y-3 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <Logo size={40} />
                 <h2 className="text-3xl md:text-4xl font-extrabold">Mach deine Stimme gehört!</h2>
@@ -314,7 +318,7 @@ export default function LandingPage() {
                 Offen für alle 13–25 Jährigen aus Grafing
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative z-10 flex flex-col sm:flex-row gap-3">
               <Button asChild variant="secondary" size="lg">
                 <Link to="/mitmachen">
                   Jetzt bewerben <ArrowRight className="ml-2 w-5 h-5" />
