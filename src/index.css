@@ -1,26 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
   --color-brand-yellow: #FFC300;
   --color-brand-black: #111111;
   --color-brand-lilac: #B4A6ED;
   --color-brand-white: #FFFFFF;
   --color-brand-gray: #F8F9FA;
-  
-  /* Fonts */
+
   --font-sans: 'Outfit', sans-serif;
-  
-  /* Border Radius */
-  --radius-xl: 1.5rem;   /* rounded-3xl */
-  --radius-2xl: 2rem;    /* Extra large for cards */
-  
-  /* Animations */
+
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+
   --animate-float: float 6s ease-in-out infinite;
 }
-
-/* Import Google Fonts - Outfit */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   color-scheme: light;
@@ -28,12 +22,10 @@
 
 body {
   @apply bg-brand-gray text-brand-black font-sans antialiased;
-  /* Dotted background pattern */
   background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Custom Utilities */
 .text-outline {
   -webkit-text-stroke: 1px #000;
   color: transparent;

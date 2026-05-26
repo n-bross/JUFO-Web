@@ -11,6 +11,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  // Base path for GitHub Pages
-  base: '/JUFO-Web/',
 })
