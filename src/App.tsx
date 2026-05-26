@@ -10,6 +10,11 @@ import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
 import LoginPage from '@/features/auth/LoginPage';
+import ToolsPage from '@/features/tools/ToolsPage';
+import TurnierListPage from '@/features/tools/turnier/TurnierListPage';
+import NewTurnierPage from '@/features/tools/turnier/NewTurnierPage';
+import TurnierDetailPage from '@/features/tools/turnier/TurnierDetailPage';
+import EventManagementPage from '@/features/tools/events/EventManagementPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,6 +32,10 @@ function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function Protected({ children }: { children: React.ReactNode }) {
+  return <ProtectedRoute>{children}</ProtectedRoute>;
+}
+
 export default function App() {
   return (
     <AuthProvider>
@@ -34,32 +43,30 @@ export default function App() {
         <ScrollToTop />
         <Layout>
           <Routes>
-            {/* Public routes */}
+            {/* Public */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/aktionen" element={<AktionenPage />} />
             <Route path="/ueber-uns" element={<UeberUnsPage />} />
             <Route path="/mitmachen" element={<MitmachenPage />} />
             <Route path="/kontakt" element={<KontaktPage />} />
             <Route path="/login" element={<LoginPage />} />
-            {/* Protected member routes – filled by later feature branches */}
-            <Route
-              path="/tools/*"
-              element={
-                <ProtectedRoute>
-                  <div className="pt-24 text-center text-black/40 font-medium">
-                    Tools werden geladen…
-                  </div>
-                </ProtectedRoute>
-              }
-            />
+
+            {/* Member-only: Tools */}
+            <Route path="/tools" element={<Protected><ToolsPage /></Protected>} />
+            <Route path="/tools/turnier" element={<Protected><TurnierListPage /></Protected>} />
+            <Route path="/tools/turnier/neu" element={<Protected><NewTurnierPage /></Protected>} />
+            <Route path="/tools/turnier/:id" element={<Protected><TurnierDetailPage /></Protected>} />
+            <Route path="/tools/events" element={<Protected><EventManagementPage /></Protected>} />
+
+            {/* Member-only: Kalender – placeholder until calendar branch */}
             <Route
               path="/kalender"
               element={
-                <ProtectedRoute>
-                  <div className="pt-24 text-center text-black/40 font-medium">
-                    Kalender wird geladen…
+                <Protected>
+                  <div className="pt-24 text-center text-black/40 font-medium p-8">
+                    Kalender folgt im nächsten Update.
                   </div>
-                </ProtectedRoute>
+                </Protected>
               }
             />
           </Routes>
