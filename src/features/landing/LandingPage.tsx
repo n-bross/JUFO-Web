@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowRight, Users, Calendar, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 import { Logo } from '@/components/ui/Logo';
 import { EventCard } from '@/features/aktionen/EventCard';
 import { events } from '@/data/events';
@@ -28,7 +29,8 @@ export default function LandingPage() {
   return (
     <div className="overflow-x-hidden">
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative pt-28 pb-24 min-h-[90vh] flex items-center">
+      <section className="section-with-watermark pt-28 pb-24 min-h-[90vh] flex items-center">
+        <BrandWatermark className="top-8 right-[-4rem]" />
         <div className="absolute -top-[12%] -left-[18%] w-[680px] h-[680px] bg-brand-yellow rounded-full -z-10" />
         <div className="absolute top-[2%] -right-[22%] w-[780px] h-[780px] bg-brand-yellow rounded-full -z-10" />
 
@@ -175,7 +177,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── About Teaser ──────────────────────────── */}
-      <section className="py-20 px-6 bg-brand-black text-white relative overflow-hidden">
+      <section className="section-with-watermark py-20 px-6 bg-brand-black text-white overflow-hidden">
+        <BrandWatermark tone="light" className="top-10 right-[-5rem]" />
         <div className="absolute -right-32 -top-32 w-96 h-96 rounded-full bg-brand-yellow/10" />
         <div className="absolute -left-20 bottom-0 w-64 h-64 rounded-full bg-brand-lilac/10" />
 

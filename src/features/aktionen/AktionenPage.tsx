@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, Clock, Users, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 import { EventCard } from './EventCard';
 import { events, formatDate, type JufoEvent } from '@/data/events';
 
@@ -187,7 +188,8 @@ export default function AktionenPage() {
   return (
     <div className="pt-16 min-h-screen">
       {/* Header */}
-      <section className="relative py-16 px-6 overflow-hidden">
+      <section className="section-with-watermark py-16 px-6 overflow-hidden">
+        <BrandWatermark className="top-6 right-[-3.5rem]" />
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-brand-yellow rounded-full -z-10" />
         <div className="max-w-[1200px] mx-auto">
           <motion.div
