@@ -9,6 +9,7 @@ const navLinks = [
   { href: '/aktionen', label: 'Aktionen' },
   { href: '/ueber-uns', label: 'Über uns' },
   { href: '/mitmachen', label: 'Mitmachen' },
+  { href: '/galerie', label: 'Galerie' },
   { href: '/kontakt', label: 'Kontakt' },
   { href: '/admin', label: 'Admin' },
   { href: '/news', label: 'News' },
