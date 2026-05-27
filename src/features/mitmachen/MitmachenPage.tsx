@@ -33,6 +33,7 @@ export default function MitmachenPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -44,13 +45,33 @@ export default function MitmachenPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = (await response.json()) as { message?: string; errors?: string[] };
+
+      if (!response.ok) {
+        const message = result.errors?.join(' ') || result.message || 'Bewerbung konnte nicht gesendet werden.';
+        throw new Error(message);
+      }
+
       setSubmitted(true);
-    }, 1000);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Unbekannter Fehler beim Senden der Bewerbung.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -249,6 +270,13 @@ export default function MitmachenPage() {
                       Die Daten werden nicht an Dritte weitergegeben. *
                     </label>
                   </div>
+
+
+                  {errorMessage ? (
+                    <div className="rounded-xl border-2 border-red-500 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                      {errorMessage}
+                    </div>
+                  ) : null}
 
                   <Button
                     type="submit"
