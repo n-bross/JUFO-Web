@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
 import { EventCard } from '@/features/aktionen/EventCard';
 import { events } from '@/data/events';
+import { getLatestPublishedPosts } from '@/data/posts';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -17,6 +18,8 @@ const stagger: Variants = {
 };
 
 const upcomingEvents = events.filter((e) => e.registrationOpen).slice(0, 3);
+
+const latestPosts = getLatestPublishedPosts(3);
 
 const stats = [
   { value: '50+', label: 'aktive Mitglieder' },
@@ -170,6 +173,39 @@ export default function LandingPage() {
             <Button asChild variant="primary">
               <Link to="/aktionen">Alle Aktionen anzeigen <ArrowRight className="ml-2 w-4 h-4" /></Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* ── News Teaser ─────────────────────────── */}
+      <section className="py-20 px-6 bg-brand-lilac/20">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-sm font-bold text-black/50 uppercase tracking-widest mb-2">Neuigkeiten</p>
+              <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Neueste Beiträge</h2>
+            </div>
+            <Button asChild variant="ghost" className="hidden md:flex items-center gap-1.5 font-bold">
+              <Link to="/news">Alle News <ChevronRight className="w-4 h-4" /></Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestPosts.map((post) => (
+              <article key={post.id} className="border-2 border-black rounded-2xl overflow-hidden bg-white shadow-[4px_4px_0_#000]">
+                {post.cover_image && <img src={post.cover_image} alt={post.title} className="w-full h-44 object-cover" />}
+                <div className="p-5">
+                  <p className="text-xs uppercase tracking-wider text-black/50 mb-2">
+                    {new Date(post.published_at ?? '').toLocaleDateString('de-DE')}
+                  </p>
+                  <h3 className="text-xl font-extrabold mb-2">{post.title}</h3>
+                  <p className="text-sm text-black/70 mb-4">{post.excerpt}</p>
+                  <Link to={`/news/${post.slug}`} className="font-bold underline">Beitrag lesen</Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
