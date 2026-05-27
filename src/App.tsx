@@ -7,7 +7,7 @@ import AktionenPage from '@/features/aktionen/AktionenPage';
 import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
-import AdminPage from '@/features/admin/AdminPage';
+import { ImpressumPage, DatenschutzPage, BarrierefreiheitPage, FAQPage, TerminePage, TeamPage, ProtokollePage, PartnerPage, ContentRoadmapPage } from '@/features/info/InfoPages';
 import NewsPage from '@/features/news/NewsPage';
 import NewsDetailPage from '@/features/news/NewsDetailPage';
 import AdminPostsPage from '@/features/admin/posts/AdminPostsPage';
@@ -39,7 +39,16 @@ export default function App() {
           <Route path="/ueber-uns" element={<UeberUnsPage />} />
           <Route path="/mitmachen" element={<MitmachenPage />} />
           <Route path="/kontakt" element={<KontaktPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+
+          <Route path="/impressum" element={<ImpressumPage />} />
+          <Route path="/datenschutz" element={<DatenschutzPage />} />
+          <Route path="/barrierefreiheit" element={<BarrierefreiheitPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/termine" element={<TerminePage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/protokolle" element={<ProtokollePage />} />
+          <Route path="/partner" element={<PartnerPage />} />
+          <Route path="/content-roadmap" element={<ContentRoadmapPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/news/:slug" element={<NewsDetailPage />} />
           <Route path="/admin/posts" element={<AdminPostsPage />} />
