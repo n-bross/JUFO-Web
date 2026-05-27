@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/ueber-uns', label: 'Über uns' },
   { href: '/mitmachen', label: 'Mitmachen' },
   { href: '/kontakt', label: 'Kontakt' },
+  { href: '/news', label: 'News' },
 ];
 
 export function Navbar() {
