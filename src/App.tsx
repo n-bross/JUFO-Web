@@ -7,6 +7,7 @@ import AktionenPage from '@/features/aktionen/AktionenPage';
 import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
+import AdminPage from '@/features/admin/AdminPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/ueber-uns" element={<UeberUnsPage />} />
           <Route path="/mitmachen" element={<MitmachenPage />} />
           <Route path="/kontakt" element={<KontaktPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
