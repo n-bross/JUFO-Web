@@ -28,21 +28,47 @@ const contactInfo = [
 ];
 
 export default function KontaktPage() {
-  const [form, setForm] = useState({ name: '', email: '', betreff: '', nachricht: '' });
+  const [form, setForm] = useState({ name: '', email: '', betreff: '', nachricht: '', honeypot: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.betreff,
+          message: form.nachricht,
+          honeypot: form.honeypot,
+        }),
+      });
+
+      const data = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? 'Nachricht konnte nicht gesendet werden.');
+      }
+
       setSubmitted(true);
-    }, 900);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : 'Unbekannter Fehler beim Senden.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -122,6 +148,16 @@ export default function KontaktPage() {
               <div className="bg-white rounded-[2rem] border-2 border-black shadow-[6px_6px_0_#000] p-8">
                 <h2 className="text-2xl font-extrabold mb-6">Nachricht senden</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  <input
+                    type="text"
+                    name="honeypot"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={form.honeypot}
+                    onChange={handleChange}
+                    className="hidden"
+                    aria-hidden="true"
+                  />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
@@ -183,6 +219,12 @@ export default function KontaktPage() {
                     />
                   </div>
 
+                  {error ? (
+                    <div className="rounded-xl border-2 border-red-400 bg-red-50 px-4 py-3 text-sm text-red-700">
+                      {error}
+                    </div>
+                  ) : null}
+
                   <Button
                     type="submit"
                     variant="accent"
@@ -220,7 +262,8 @@ export default function KontaktPage() {
                   variant="primary"
                   onClick={() => {
                     setSubmitted(false);
-                    setForm({ name: '', email: '', betreff: '', nachricht: '' });
+                    setError(null);
+                    setForm({ name: '', email: '', betreff: '', nachricht: '', honeypot: '' });
                   }}
                 >
                   Neue Nachricht
