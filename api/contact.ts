@@ -1,4 +1,4 @@
-import { DatabaseSync } from 'node:sqlite';
+import { getPool } from './db.js';
 
 type ContactBody = {
   name?: string;
@@ -20,8 +20,6 @@ type ApiResponse = {
   json: (payload: unknown) => void;
   setHeader: (name: string, value: string) => void;
 };
-
-const db = new DatabaseSync(process.env.CONTACT_DB_PATH ?? './contact.sqlite');
 
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = Number(process.env.CONTACT_RATE_LIMIT_MAX ?? 5);
@@ -57,11 +55,11 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function ensureTable(): void {
-  db.exec(`
+async function ensureTable(): Promise<void> {
+  await getPool().query(`
     CREATE TABLE IF NOT EXISTS contact_requests (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      id BIGSERIAL PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       name TEXT NOT NULL,
       email TEXT NOT NULL,
       subject TEXT NOT NULL,
@@ -135,12 +133,12 @@ export default async function handler(req: ApiRequest, res: ApiResponse): Promis
   }
 
   try {
-    ensureTable();
+    await ensureTable();
 
-    const stmt = db.prepare(
-      'INSERT INTO contact_requests (name, email, subject, message, status) VALUES (?, ?, ?, ?, ?)',
+    await getPool().query(
+      'INSERT INTO contact_requests (name, email, subject, message, status) VALUES ($1, $2, $3, $4, $5)',
+      [name, email, subject, message, 'new'],
     );
-    stmt.run(name, email, subject, message, 'new');
 
     await sendNotificationEmail({ name, email, subject, message });
 

@@ -1,5 +1,8 @@
 import { isApplicationStatus } from '../src/types/application';
-import { createApplication, listApplications, validateApplicationPayload } from '../src/server/applications';
+import { createHash, randomUUID } from 'node:crypto';
+import { getPool } from './db.js';
+import { validateApplicationPayload } from '../src/server/applications';
+import type { ApplicationInput, ApplicationStatus } from '../src/types/application';
 
 type ApiRequest = {
   method?: string;
@@ -20,6 +23,72 @@ const getIpAddress = (req: ApiRequest) => {
   if (Array.isArray(forwarded)) return forwarded[0];
   if (typeof forwarded === 'string') return forwarded.split(',')[0]?.trim() ?? '';
   return req.socket?.remoteAddress ?? '';
+};
+
+const ensureApplicationsTable = async () => {
+  await getPool().query(`
+    CREATE TABLE IF NOT EXISTS applications (
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      consent_timestamp TIMESTAMPTZ NOT NULL,
+      ip_hash TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'new',
+      vorname TEXT NOT NULL,
+      nachname TEXT NOT NULL,
+      email TEXT NOT NULL,
+      alter TEXT NOT NULL,
+      wohnort TEXT NOT NULL,
+      motivation TEXT NOT NULL,
+      consent BOOLEAN NOT NULL DEFAULT TRUE
+    )
+  `);
+};
+
+const createApplication = async (input: ApplicationInput, ipAddress: string, status: ApplicationStatus = 'new') => {
+  await ensureApplicationsTable();
+
+  const id = randomUUID();
+  const nowIso = new Date().toISOString();
+  const ipHash = createHash('sha256').update(ipAddress || 'unknown').digest('hex');
+
+  await getPool().query(
+    `INSERT INTO applications (
+       id, created_at, consent_timestamp, ip_hash, status,
+       vorname, nachname, email, alter, wohnort, motivation, consent
+     )
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+    [
+      id,
+      nowIso,
+      nowIso,
+      ipHash,
+      status,
+      input.vorname,
+      input.nachname,
+      input.email,
+      input.alter,
+      input.wohnort,
+      input.motivation,
+      input.consent,
+    ],
+  );
+
+  return { id };
+};
+
+const listApplications = async (status?: ApplicationStatus) => {
+  await ensureApplicationsTable();
+
+  const result = await getPool().query(
+    `SELECT id, created_at, consent_timestamp, ip_hash, status,
+            vorname, nachname, email, alter, wohnort, motivation, consent
+       FROM applications
+      WHERE ($1::text IS NULL OR status = $1)
+      ORDER BY created_at DESC`,
+    [status ?? null],
+  );
+
+  return result.rows;
 };
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
