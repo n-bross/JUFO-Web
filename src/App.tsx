@@ -8,6 +8,8 @@ import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
 import { ImpressumPage, DatenschutzPage, BarrierefreiheitPage, FAQPage, TerminePage, TeamPage, ProtokollePage, PartnerPage, ContentRoadmapPage } from '@/features/info/InfoPages';
+import GaleriePage from '@/features/galerie/GaleriePage';
+import AdminPage from '@/features/admin/AdminPage';
 import NewsPage from '@/features/news/NewsPage';
 import NewsDetailPage from '@/features/news/NewsDetailPage';
 import AdminPostsPage from '@/features/admin/posts/AdminPostsPage';
@@ -39,7 +41,8 @@ export default function App() {
           <Route path="/ueber-uns" element={<UeberUnsPage />} />
           <Route path="/mitmachen" element={<MitmachenPage />} />
           <Route path="/kontakt" element={<KontaktPage />} />
-
+          <Route path="/galerie" element={<GaleriePage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/impressum" element={<ImpressumPage />} />
           <Route path="/datenschutz" element={<DatenschutzPage />} />
           <Route path="/barrierefreiheit" element={<BarrierefreiheitPage />} />
