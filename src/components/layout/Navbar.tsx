@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/mitmachen', label: 'Mitmachen' },
   { href: '/kontakt', label: 'Kontakt' },
   { href: '/admin', label: 'Admin' },
+  { href: '/news', label: 'News' },
 ];
 
 export function Navbar() {

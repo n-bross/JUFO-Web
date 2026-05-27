@@ -8,6 +8,9 @@ import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
 import AdminPage from '@/features/admin/AdminPage';
+import NewsPage from '@/features/news/NewsPage';
+import NewsDetailPage from '@/features/news/NewsDetailPage';
+import AdminPostsPage from '@/features/admin/posts/AdminPostsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,6 +40,9 @@ export default function App() {
           <Route path="/mitmachen" element={<MitmachenPage />} />
           <Route path="/kontakt" element={<KontaktPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/news/:slug" element={<NewsDetailPage />} />
+          <Route path="/admin/posts" element={<AdminPostsPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
