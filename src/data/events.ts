@@ -13,6 +13,7 @@ export interface JufoEvent {
   category: EventCategory;
   spots?: number;
   spotsLeft?: number;
+  confirmedRegistrations?: number;
   image: string;
   registrationOpen: boolean;
 }
@@ -56,7 +57,7 @@ export const events: JufoEvent[] = [
     longDescription: 'Hast du dich schon mal gefragt, wie Entscheidungen in Grafing getroffen werden? Beim Stadtrat-Besuch schauen wir gemeinsam hinter die Kulissen der Lokalpolitik. Wir sitzen live in einer Stadtratssitzung und lernen, wie wir als Jugendforum unsere eigenen Anträge einbringen können.',
     category: 'event',
     spots: 20,
-    spotsLeft: 8,
+    confirmedRegistrations: 12,
     image: 'https://images.unsplash.com/photo-1577415124269-fc1140a69e91?auto=format&fit=crop&w=800&q=80',
     registrationOpen: true,
   },
@@ -72,7 +73,7 @@ export const events: JufoEvent[] = [
     longDescription: 'Was fehlt dir in Grafing? Mehr Treffpunkte, bessere Radwege, mehr Events? In diesem kreativen Workshop sammeln wir eure Ideen und erarbeiten konkrete Vorschläge, die wir an die Stadtpolitik weitergeben. Eure Stimme zählt!',
     category: 'workshop',
     spots: 25,
-    spotsLeft: 12,
+    confirmedRegistrations: 13,
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
     registrationOpen: true,
   },
@@ -87,7 +88,7 @@ export const events: JufoEvent[] = [
     longDescription: 'Das größte Event des Jahres! Komm mit Freunden ans Wasser, grill mit uns, höre Live-Musik und mach mit bei unseren Sportevents. Eintritt frei, Anmeldung hilft uns bei der Planung.',
     category: 'social',
     spots: 150,
-    spotsLeft: 87,
+    confirmedRegistrations: 63,
     image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
     registrationOpen: true,
   },
@@ -103,7 +104,7 @@ export const events: JufoEvent[] = [
     longDescription: 'Teams aus 3 Personen treten gegeneinander an. Wir spielen nach offiziellen FIBA 3x3-Regeln. Es gibt Pokale für die Top-3-Teams und Preise für alle Teilnehmer. Anmeldung als Team oder Einzelperson (wir suchen dann ein Team für dich).',
     category: 'sport',
     spots: 48,
-    spotsLeft: 24,
+    confirmedRegistrations: 24,
     image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
     registrationOpen: true,
   },
@@ -118,7 +119,7 @@ export const events: JufoEvent[] = [
     longDescription: 'Die Jugendnacht Grafing ist unser jährliches Highlight! Lokale Bands und DJs sorgen für die Musik. Wir organisieren Spiele, Workshops und eine Fotobox. Junge Menschen ab 14 Jahren sind herzlich willkommen.',
     category: 'social',
     spots: 200,
-    spotsLeft: 134,
+    confirmedRegistrations: 66,
     image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
     registrationOpen: false,
   },
@@ -134,8 +135,22 @@ export const events: JufoEvent[] = [
     longDescription: 'Dieses ganztägige Planspiel gibt dir einen tiefen Einblick in die Mechanismen der Lokalpolitik. Du übernimmst eine Rolle im fiktiven Stadtrat und vertrittst eine Fraktion. Am Ende weißt du, wie politische Entscheidungen wirklich getroffen werden.',
     category: 'workshop',
     spots: 30,
-    spotsLeft: 22,
+    confirmedRegistrations: 8,
     image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
     registrationOpen: false,
   },
 ];
+
+export function withDynamicSpots(event: JufoEvent): JufoEvent {
+  if (event.spots == null) return event;
+
+  const confirmed = event.confirmedRegistrations ?? 0;
+  const spotsLeft = Math.max(event.spots - confirmed, 0);
+
+  return {
+    ...event,
+    spotsLeft,
+  };
+}
+
+export const eventsWithDynamicSpots = events.map(withDynamicSpots);

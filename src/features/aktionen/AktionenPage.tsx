@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, Clock, Users, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 import { EventCard } from './EventCard';
-import { events, formatDate, type JufoEvent } from '@/data/events';
+import { eventsWithDynamicSpots, formatDate, type JufoEvent } from '@/data/events';
 
 type Filter = 'alle' | 'workshop' | 'event' | 'social' | 'sport';
 
@@ -25,14 +26,40 @@ function RegisterModal({
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/event-registrations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventId: event.id,
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data?.message ?? 'Anmeldung fehlgeschlagen. Bitte versuche es erneut.');
+        return;
+      }
+
       setSubmitted(true);
-    }, 900);
+    } catch {
+      setError('Netzwerkfehler. Bitte prüfe deine Verbindung und versuche es erneut.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -118,6 +145,7 @@ function RegisterModal({
                   placeholder="Fragen oder Besonderheiten?"
                 />
               </div>
+              {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
               {event.spotsLeft != null && (
                 <p className="text-xs text-black/50 flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5" />
@@ -181,13 +209,14 @@ export default function AktionenPage() {
 
   const filtered =
     activeFilter === 'alle'
-      ? events
-      : events.filter((e) => e.category === activeFilter);
+      ? eventsWithDynamicSpots
+      : eventsWithDynamicSpots.filter((e) => e.category === activeFilter);
 
   return (
     <div className="pt-16 min-h-screen">
       {/* Header */}
-      <section className="relative py-16 px-6 overflow-hidden">
+      <section className="section-with-watermark py-16 px-6 overflow-hidden">
+        <BrandWatermark className="top-6 right-[-3.5rem]" />
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-brand-yellow rounded-full -z-10" />
         <div className="max-w-[1200px] mx-auto">
           <motion.div

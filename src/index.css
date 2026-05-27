@@ -18,6 +18,12 @@
 
 :root {
   color-scheme: light;
+
+  --brand-watermark-opacity: 0.05;
+  --brand-watermark-size: clamp(180px, 28vw, 440px);
+  --brand-watermark-mobile-size: clamp(140px, 52vw, 260px);
+  --brand-watermark-top: 1.5rem;
+  --brand-watermark-right: -3rem;
 }
 
 body {
@@ -34,4 +40,36 @@ body {
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+.brand-watermark {
+  position: absolute;
+  top: var(--brand-watermark-top);
+  right: var(--brand-watermark-right);
+  width: var(--brand-watermark-size);
+  height: var(--brand-watermark-size);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: var(--brand-watermark-opacity);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .brand-watermark {
+    width: var(--brand-watermark-mobile-size);
+    height: var(--brand-watermark-mobile-size);
+    opacity: 0.035;
+  }
+}
+
+.section-with-watermark {
+  position: relative;
+  isolation: isolate;
+}
+
+.section-with-watermark > *:not(.brand-watermark) {
+  position: relative;
+  z-index: 1;
 }

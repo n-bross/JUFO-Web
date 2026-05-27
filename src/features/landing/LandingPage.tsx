@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowRight, Users, Calendar, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 import { Logo } from '@/components/ui/Logo';
 import { EventCard } from '@/features/aktionen/EventCard';
 import { events } from '@/data/events';
 import { galleryImages } from '@/data/gallery';
+import { getLatestPublishedPosts } from '@/data/posts';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -20,6 +22,7 @@ const stagger: Variants = {
 const upcomingEvents = events.filter((e) => e.registrationOpen).slice(0, 3);
 
 const galleryTeaserImages = galleryImages.slice(0, 6);
+const latestPosts = getLatestPublishedPosts(3);
 
 const stats = [
   { value: '50+', label: 'aktive Mitglieder' },
@@ -31,7 +34,8 @@ export default function LandingPage() {
   return (
     <div className="overflow-x-hidden">
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative pt-28 pb-24 min-h-[90vh] flex items-center">
+      <section className="section-with-watermark pt-28 pb-24 min-h-[90vh] flex items-center">
+        <BrandWatermark className="top-8 right-[-4rem]" />
         <div className="absolute -top-[12%] -left-[18%] w-[680px] h-[680px] bg-brand-yellow rounded-full -z-10" />
         <div className="absolute top-[2%] -right-[22%] w-[780px] h-[780px] bg-brand-yellow rounded-full -z-10" />
 
@@ -205,13 +209,40 @@ export default function LandingPage() {
                   />
                 </picture>
               </div>
+      {/* ── News Teaser ─────────────────────────── */}
+      <section className="py-20 px-6 bg-brand-lilac/20">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-sm font-bold text-black/50 uppercase tracking-widest mb-2">Neuigkeiten</p>
+              <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Neueste Beiträge</h2>
+            </div>
+            <Button asChild variant="ghost" className="hidden md:flex items-center gap-1.5 font-bold">
+              <Link to="/news">Alle News <ChevronRight className="w-4 h-4" /></Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestPosts.map((post) => (
+              <article key={post.id} className="border-2 border-black rounded-2xl overflow-hidden bg-white shadow-[4px_4px_0_#000]">
+                {post.cover_image && <img src={post.cover_image} alt={post.title} className="w-full h-44 object-cover" />}
+                <div className="p-5">
+                  <p className="text-xs uppercase tracking-wider text-black/50 mb-2">
+                    {new Date(post.published_at ?? '').toLocaleDateString('de-DE')}
+                  </p>
+                  <h3 className="text-xl font-extrabold mb-2">{post.title}</h3>
+                  <p className="text-sm text-black/70 mb-4">{post.excerpt}</p>
+                  <Link to={`/news/${post.slug}`} className="font-bold underline">Beitrag lesen</Link>
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── About Teaser ──────────────────────────── */}
-      <section className="py-20 px-6 bg-brand-black text-white relative overflow-hidden">
+      <section className="section-with-watermark py-20 px-6 bg-brand-black text-white overflow-hidden">
+        <BrandWatermark tone="light" className="top-10 right-[-5rem]" />
         <div className="absolute -right-32 -top-32 w-96 h-96 rounded-full bg-brand-yellow/10" />
         <div className="absolute -left-20 bottom-0 w-64 h-64 rounded-full bg-brand-lilac/10" />
 
