@@ -6,6 +6,7 @@ const navLinks = [
   { href: '/aktionen', label: 'Aktionen' },
   { href: '/ueber-uns', label: 'Über uns' },
   { href: '/mitmachen', label: 'Mitmachen' },
+  { href: '/galerie', label: 'Galerie' },
   { href: '/kontakt', label: 'Kontakt' },
 ];
 
@@ -77,6 +78,7 @@ export function Footer() {
 
         <div className="mt-10 pt-6 border-t-2 border-black/20 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-black/60 font-medium">
           <span>© 2026 Jugendforum Grafing. Alle Rechte vorbehalten.</span>
+          <span>Bildrechte: Alle Fotos sind den jeweiligen Fotograf:innen in der Galerie zugeordnet.</span>
           <div className="flex gap-4">
             <a href="#" className="hover:underline">Impressum</a>
             <a href="#" className="hover:underline">Datenschutz</a>

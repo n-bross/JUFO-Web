@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
 import { EventCard } from '@/features/aktionen/EventCard';
 import { events } from '@/data/events';
+import { galleryImages } from '@/data/gallery';
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -17,6 +18,8 @@ const stagger: Variants = {
 };
 
 const upcomingEvents = events.filter((e) => e.registrationOpen).slice(0, 3);
+
+const galleryTeaserImages = galleryImages.slice(0, 6);
 
 const stats = [
   { value: '50+', label: 'aktive Mitglieder' },
@@ -170,6 +173,39 @@ export default function LandingPage() {
             <Button asChild variant="primary">
               <Link to="/aktionen">Alle Aktionen anzeigen <ArrowRight className="ml-2 w-4 h-4" /></Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+
+
+      {/* ── Gallery Teaser ───────────────────────── */}
+      <section className="py-20 px-6 bg-brand-lilac/10 border-y-2 border-black">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
+            <div>
+              <p className="text-sm font-bold text-black/50 uppercase tracking-widest mb-2">Aus der Galerie</p>
+              <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Momente aus dem Jufo</h2>
+            </div>
+            <Button asChild variant="primary">
+              <Link to="/galerie">Zur Galerie <ArrowRight className="ml-2 w-4 h-4" /></Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {galleryTeaserImages.map((image) => (
+              <div key={image.id} className="rounded-2xl overflow-hidden border-2 border-black shadow-[3px_3px_0_#000] bg-white">
+                <picture>
+                  {image.image.webp && <source srcSet={image.image.webp} type="image/webp" />}
+                  <img
+                    src={image.image.src}
+                    alt={image.image.alt}
+                    loading="lazy"
+                    className="w-full h-40 md:h-48 object-cover"
+                  />
+                </picture>
+              </div>
+            ))}
           </div>
         </div>
       </section>
