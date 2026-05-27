@@ -8,6 +8,9 @@ import UeberUnsPage from '@/features/ueber-uns/UeberUnsPage';
 import MitmachenPage from '@/features/mitmachen/MitmachenPage';
 import KontaktPage from '@/features/kontakt/KontaktPage';
 import { ImpressumPage, DatenschutzPage, BarrierefreiheitPage, FAQPage, TerminePage, TeamPage, ProtokollePage, PartnerPage, ContentRoadmapPage } from '@/features/info/InfoPages';
+import NewsPage from '@/features/news/NewsPage';
+import NewsDetailPage from '@/features/news/NewsDetailPage';
+import AdminPostsPage from '@/features/admin/posts/AdminPostsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,6 +49,9 @@ export default function App() {
           <Route path="/protokolle" element={<ProtokollePage />} />
           <Route path="/partner" element={<PartnerPage />} />
           <Route path="/content-roadmap" element={<ContentRoadmapPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/news/:slug" element={<NewsDetailPage />} />
+          <Route path="/admin/posts" element={<AdminPostsPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

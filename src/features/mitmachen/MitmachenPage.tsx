@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Send, Star, Users, Calendar, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 
 const benefits = [
   { icon: <Star className="w-5 h-5" />, text: 'Mitgestaltung der Stadtpolitik in Grafing' },
@@ -32,6 +33,7 @@ export default function MitmachenPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -43,19 +45,40 @@ export default function MitmachenPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = (await response.json()) as { message?: string; errors?: string[] };
+
+      if (!response.ok) {
+        const message = result.errors?.join(' ') || result.message || 'Bewerbung konnte nicht gesendet werden.';
+        throw new Error(message);
+      }
+
       setSubmitted(true);
-    }, 1000);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Unbekannter Fehler beim Senden der Bewerbung.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="pt-16 min-h-screen">
       {/* Header */}
-      <section className="relative py-16 px-6 overflow-hidden">
+      <section className="section-with-watermark py-16 px-6 overflow-hidden">
+        <BrandWatermark className="top-6 right-[-3.5rem]" />
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-brand-yellow rounded-full -z-10" />
         <div className="max-w-[1200px] mx-auto">
           <motion.div
@@ -247,6 +270,13 @@ export default function MitmachenPage() {
                       Die Daten werden nicht an Dritte weitergegeben. *
                     </label>
                   </div>
+
+
+                  {errorMessage ? (
+                    <div className="rounded-xl border-2 border-red-500 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                      {errorMessage}
+                    </div>
+                  ) : null}
 
                   <Button
                     type="submit"
