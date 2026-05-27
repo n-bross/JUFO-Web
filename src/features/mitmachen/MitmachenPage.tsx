@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Send, Star, Users, Calendar, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 
 const benefits = [
   { icon: <Star className="w-5 h-5" />, text: 'Mitgestaltung der Stadtpolitik in Grafing' },
@@ -55,7 +56,8 @@ export default function MitmachenPage() {
   return (
     <div className="pt-16 min-h-screen">
       {/* Header */}
-      <section className="relative py-16 px-6 overflow-hidden">
+      <section className="section-with-watermark py-16 px-6 overflow-hidden">
+        <BrandWatermark className="top-6 right-[-3.5rem]" />
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-brand-yellow rounded-full -z-10" />
         <div className="max-w-[1200px] mx-auto">
           <motion.div

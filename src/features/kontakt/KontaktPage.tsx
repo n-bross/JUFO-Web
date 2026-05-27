@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Instagram, MessageCircle, Send, CheckCircle, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { BrandWatermark } from '@/components/ui/BrandWatermark';
 
 const contactInfo = [
   {
@@ -74,7 +75,8 @@ export default function KontaktPage() {
   return (
     <div className="pt-16 min-h-screen">
       {/* Header */}
-      <section className="relative py-16 px-6 overflow-hidden">
+      <section className="section-with-watermark py-16 px-6 overflow-hidden">
+        <BrandWatermark className="top-6 right-[-3.5rem]" />
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-brand-lilac rounded-full -z-10 opacity-60" />
         <div className="max-w-[1200px] mx-auto">
           <motion.div
