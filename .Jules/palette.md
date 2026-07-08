@@ -1,0 +1,3 @@
+## 2024-07-25 - Missing explicit label-to-input association in forms
+**Learning:** The forms across the app lacked proper label-to-input associations using `htmlFor` and `id` attributes. Relying on implicit wrapping or visual proximity is insufficient for proper accessibility, as screen readers may fail to associate the label correctly, and it prevents clicking the label from focusing the input.
+**Action:** Always include explicitly matched `htmlFor` on `<label>` elements and corresponding `id` attributes on form inputs (`<input>`, `<select>`, `<textarea>`). Add this to the standard checklist when creating or reviewing form components.
