@@ -160,10 +160,11 @@ export default function MitmachenPage() {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="vorname" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Vorname *
                       </label>
                       <input
+                        id="vorname"
                         type="text"
                         name="vorname"
                         required
@@ -174,10 +175,11 @@ export default function MitmachenPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="nachname" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Nachname *
                       </label>
                       <input
+                        id="nachname"
                         type="text"
                         name="nachname"
                         required
@@ -190,10 +192,11 @@ export default function MitmachenPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label htmlFor="email" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       E-Mail Adresse *
                     </label>
                     <input
+                      id="email"
                       type="email"
                       name="email"
                       required
@@ -206,10 +209,11 @@ export default function MitmachenPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="alter" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Alter *
                       </label>
                       <select
+                        id="alter"
                         name="alter"
                         required
                         value={form.alter}
@@ -225,10 +229,11 @@ export default function MitmachenPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="wohnort" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Wohnort *
                       </label>
                       <input
+                        id="wohnort"
                         type="text"
                         name="wohnort"
                         required
@@ -241,10 +246,11 @@ export default function MitmachenPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label htmlFor="motivation" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       Warum möchtest du mitmachen? *
                     </label>
                     <textarea
+                      id="motivation"
                       name="motivation"
                       required
                       rows={4}

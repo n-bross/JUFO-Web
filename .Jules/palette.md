@@ -1,0 +1,3 @@
+## 2025-02-09 - Missing Form Label Associations Pattern
+**Learning:** Across this app, custom forms (in Kontakt, Aktionen, and Mitmachen pages) consistently used `<label>` tags without `htmlFor` attributes, failing to programmatically associate them with their respective inputs. While visually correct, this breaks accessibility for screen readers and prevents the default UX behavior where clicking a label focuses its input.
+**Action:** When adding or modifying forms in this design system, always ensure `<label htmlFor="[id]">` is used and matches a unique `id` on the input element, particularly since this app relies heavily on standard HTML forms without a dedicated UI form library handling this automatically.

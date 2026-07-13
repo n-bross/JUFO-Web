@@ -108,10 +108,11 @@ function RegisterModal({
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="modal-name" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   Dein Name *
                 </label>
                 <input
+                  id="modal-name"
                   type="text"
                   required
                   value={form.name}
@@ -121,10 +122,11 @@ function RegisterModal({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="modal-email" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   E-Mail Adresse *
                 </label>
                 <input
+                  id="modal-email"
                   type="email"
                   required
                   value={form.email}
@@ -134,10 +136,11 @@ function RegisterModal({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="modal-anmerkung" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   Anmerkung (optional)
                 </label>
                 <textarea
+                  id="modal-anmerkung"
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   rows={2}
