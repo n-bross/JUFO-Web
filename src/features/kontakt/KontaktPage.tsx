@@ -162,10 +162,11 @@ export default function KontaktPage() {
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="kontakt-name" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Dein Name *
                       </label>
                       <input
+                        id="kontakt-name"
                         type="text"
                         name="name"
                         required
@@ -176,10 +177,11 @@ export default function KontaktPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label htmlFor="kontakt-email" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         E-Mail *
                       </label>
                       <input
+                        id="kontakt-email"
                         type="email"
                         name="email"
                         required
@@ -192,10 +194,11 @@ export default function KontaktPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label htmlFor="kontakt-betreff" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       Betreff *
                     </label>
                     <input
+                      id="kontakt-betreff"
                       type="text"
                       name="betreff"
                       required
@@ -207,10 +210,11 @@ export default function KontaktPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label htmlFor="kontakt-nachricht" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       Nachricht *
                     </label>
                     <textarea
+                      id="kontakt-nachricht"
                       name="nachricht"
                       required
                       rows={5}
