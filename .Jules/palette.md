@@ -1,0 +1,3 @@
+## 2024-05-27 - Keyboard Navigation Focus
+**Learning:** Found that custom Tailwind components often omit `focus-visible` styling, making them invisible to keyboard navigation. The generic Radix UI `Slot` used in the base `Button` component required `focus-visible:ring-2` styling. Mobile hamburger menus can lack crucial `aria-expanded` attributes, breaking screen reader context for navigation states.
+**Action:** Always ensure interactive elements, particularly global base components like `Button`, have explicit `focus-visible` styles using Tailwind's ring utilities (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black`). Remember to dynamically update `aria-label` and include `aria-expanded` on toggles.
