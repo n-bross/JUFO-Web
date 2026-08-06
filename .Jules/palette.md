@@ -1,0 +1,3 @@
+## 2025-01-08 - Accessible Navigation State
+**Learning:** For single-page applications with visual state indicators (like active navigation links or open menus), screen readers miss the context if semantic attributes aren't used alongside visual ones.
+**Action:** Always pair visual state changes (e.g., active styling, toggle icons) with corresponding ARIA attributes (`aria-current="page"`, `aria-expanded={isOpen}`) to ensure state is communicated to assistive technologies.
