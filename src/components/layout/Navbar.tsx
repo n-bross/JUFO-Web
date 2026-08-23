@@ -51,6 +51,7 @@ export function Navbar() {
             <Link
               key={link.href}
               to={link.href}
+              aria-current={location.pathname === link.href ? 'page' : undefined}
               className={cn(
                 'text-sm font-semibold transition-colors',
                 location.pathname === link.href
@@ -69,7 +70,8 @@ export function Navbar() {
         <button
           className="md:hidden p-2 rounded-lg hover:bg-black/5 transition-colors"
           onClick={() => setOpen(!open)}
-          aria-label="Menü öffnen"
+          aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+          aria-expanded={open}
         >
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -81,6 +83,7 @@ export function Navbar() {
             <Link
               key={link.href}
               to={link.href}
+              aria-current={location.pathname === link.href ? 'page' : undefined}
               className={cn(
                 'text-base font-semibold py-3 border-b border-black/10 flex items-center justify-between',
                 location.pathname === link.href ? 'text-black' : 'text-black/70'
