@@ -1,0 +1,3 @@
+## 2026-09-06 - Dynamic ARIA attributes for Navigation State
+**Learning:** Hardcoding accessibility attributes (like `aria-label="Menü öffnen"`) leaves screen reader users unaware of state changes (like when the menu is actually open). Using dynamic `aria-label` along with `aria-expanded` and `aria-current="page"` correctly communicates the state and location.
+**Action:** Always pair visual state changes (e.g., active navigation links, open menus) with corresponding semantic ARIA attributes (`aria-current`, `aria-expanded`, dynamic `aria-label`) for screen reader accessibility.
