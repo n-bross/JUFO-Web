@@ -108,10 +108,11 @@ function RegisterModal({
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="name" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   Dein Name *
                 </label>
                 <input
+                  id="name"
                   type="text"
                   required
                   value={form.name}
@@ -121,10 +122,11 @@ function RegisterModal({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="email" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   E-Mail Adresse *
                 </label>
                 <input
+                  id="email"
                   type="email"
                   required
                   value={form.email}
