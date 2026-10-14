@@ -68,7 +68,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="md:hidden p-2 rounded-lg hover:bg-black/5 transition-colors"
+          className="md:hidden p-2 rounded-lg hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black transition-colors"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
