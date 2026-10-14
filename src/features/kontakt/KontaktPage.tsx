@@ -162,11 +162,10 @@ export default function KontaktPage() {
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         Dein Name *
                       </label>
                       <input
-                        id="name"
                         type="text"
                         name="name"
                         required
@@ -177,11 +176,10 @@ export default function KontaktPage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                      <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                         E-Mail *
                       </label>
                       <input
-                        id="email"
                         type="email"
                         name="email"
                         required
@@ -194,11 +192,10 @@ export default function KontaktPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="betreff" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       Betreff *
                     </label>
                     <input
-                      id="betreff"
                       type="text"
                       name="betreff"
                       required
@@ -210,11 +207,10 @@ export default function KontaktPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="nachricht" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                    <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                       Nachricht *
                     </label>
                     <textarea
-                      id="nachricht"
                       name="nachricht"
                       required
                       rows={5}
