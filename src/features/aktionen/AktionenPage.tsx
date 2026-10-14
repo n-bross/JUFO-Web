@@ -136,10 +136,11 @@ function RegisterModal({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
+                <label htmlFor="message" className="block text-xs font-bold mb-1.5 uppercase tracking-wider">
                   Anmerkung (optional)
                 </label>
                 <textarea
+                  id="message"
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   rows={2}
