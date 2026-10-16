@@ -9,3 +9,7 @@
 ## Focus rings on interactive elements
 **Learning:** Interactive elements such as buttons and navigation toggles require clear focus-visible rings for keyboard accessibility.
 **Action:** Use `focus-visible:ring-2` on buttons and icon toggles.
+
+## 2026-10-16 - Add aria-pressed to toggle and filter buttons
+**Learning:** Filter buttons and status toggles that look like buttons visually do not convey their 'active' or 'selected' state to screen readers natively. They require `aria-pressed` to act as toggle buttons correctly.
+**Action:** Always add `aria-pressed={condition}` to filter buttons and toggles to expose their state to screen readers.
