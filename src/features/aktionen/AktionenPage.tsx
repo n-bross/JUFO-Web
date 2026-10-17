@@ -247,6 +247,7 @@ export default function AktionenPage() {
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
+                aria-pressed={activeFilter === f}
                 className={`px-4 py-2 rounded-full text-sm font-bold border-2 border-black transition-all ${
                   activeFilter === f
                     ? 'bg-black text-white shadow-[2px_2px_0_#FFC300]'
