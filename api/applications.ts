@@ -1,5 +1,5 @@
 import { isApplicationStatus } from '../src/types/application';
-import { createHash, randomUUID } from 'node:crypto';
+import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { getPool } from './db.js';
 import { validateApplicationPayload } from '../src/server/applications';
 import type { ApplicationInput, ApplicationStatus } from '../src/types/application';
@@ -23,6 +23,23 @@ const getIpAddress = (req: ApiRequest) => {
   if (Array.isArray(forwarded)) return forwarded[0];
   if (typeof forwarded === 'string') return forwarded.split(',')[0]?.trim() ?? '';
   return req.socket?.remoteAddress ?? '';
+};
+
+const verifyAdminToken = (req: ApiRequest): boolean => {
+  const configuredToken = process.env.ADMIN_API_TOKEN?.trim() ?? '';
+  if (!configuredToken) return false;
+
+  const authHeader = req.headers['authorization'];
+  const rawAuth = Array.isArray(authHeader) ? authHeader[0] : authHeader;
+  if (typeof rawAuth !== 'string' || !rawAuth.startsWith('Bearer ')) {
+    return false;
+  }
+
+  const providedToken = rawAuth.slice('Bearer '.length).trim();
+  const a = Buffer.from(providedToken, 'utf8');
+  const b = Buffer.from(configuredToken, 'utf8');
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 };
 
 const ensureApplicationsTable = async () => {
@@ -104,6 +121,11 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   if (req.method === 'GET') {
+    if (!verifyAdminToken(req)) {
+      res.setHeader('WWW-Authenticate', 'Bearer');
+      return res.status(401).json({ message: 'Nicht autorisiert. Gültiges Admin-Bearer-Token erforderlich.' });
+    }
+
     const statusRaw = req.query?.status;
     const statusParam = typeof statusRaw === 'string' ? statusRaw : undefined;
 

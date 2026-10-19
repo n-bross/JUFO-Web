@@ -8,9 +8,17 @@ export function getPool() {
   }
 
   if (!pool) {
+    const sslConfig =
+      process.env.NODE_ENV === 'production'
+        ? {
+            rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false',
+            ...(process.env.DATABASE_SSL_CA ? { ca: process.env.DATABASE_SSL_CA } : {}),
+          }
+        : undefined;
+
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+      ssl: sslConfig,
     });
   }
 
