@@ -1,29 +1,100 @@
-# Create T3 App
+<div align="center">
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# 🐻 JUFO-Web — Jugendforum Grafing
 
-## What's next? How do I make an app with this?
+**Offizielle Full-Stack-Webplattform & digitales Vereinsportal für das Jugendforum Grafing**
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+[![React 18](https://img.shields.io/badge/React_18-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite 6](https://img.shields.io/badge/Vite_6-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Vercel](https://img.shields.io/badge/Vercel_Serverless-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+</div>
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## 🎯 Überblick
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+**JUFO-Web** ist die zentrale Webanwendung für das **Jugendforum Grafing**. Sie verbindet eine moderne, barrierearme öffentliche Vereins-Website mit Serverless-API-Endpunkten (PostgreSQL + Resend) sowie einem geschützten Admin-Bereich für Event-Anmeldungen, Redaktionsbeiträge und Turnierplanung.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### ✨ Kernfunktionen
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- **📅 Aktionen & Event-Anmeldung:** Übersicht aktueller Jugendforum-Veranstaltungen mit direkter Online-Anmeldung, dynamischer Restplatzberechnung und Dublettenprüfung (`POST /api/event-registrations`).
+- **🤝 Mitmachen & Mitgliedsanträge:** Mehrstufiges Bewerbungsformular mit serverseitiger Validierung, DSGVO-Consent-Protokollierung (gehashter IP-Nachweis) und geschütztem Admin-Abruf (`GET / POST /api/applications`).
+- **📬 Kontaktformular mit Spam- & Rate-Limit-Schutz:** Integrierter Honeypot, IP-basiertes Rate-Limiting, Persistierung in PostgreSQL und automatische E-Mail-Benachrichtigung über die **Resend API** (`POST /api/contact`).
+- **🖼️ Kategorisierte Mediengalerie & News-System:** Filterbare Galerie mit Lightbox-Ansicht sowie ein Redaktionssystem für Neuigkeiten und Rückblicke.
+- **🛠️ Admin-Bereich & Turnierplaner:** Verwaltung von Anmeldungen (inkl. CSV-/JSON-Export), Beitrags-CRUD sowie automatische Team- und Spielplan-Generierung (Single-Elimination & Gruppenphase).
 
-## How do I deploy this?
+---
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## 🏗️ Projektstruktur
+
+```text
+JUFO-Web/
+├── api/                         # Vercel Serverless API Functions (Node.js / TypeScript)
+│   ├── applications.ts          # Mitgliedsanträge (POST öffentlich, GET mit Admin-Bearer-Token)
+│   ├── contact.ts               # Kontaktformular mit Rate-Limiting, Honeypot & Resend-Mail
+│   ├── event-registrations.js   # Event-Anmeldungen mit Kapazitäts- & Dublettenprüfung
+│   └── db.js                    # PostgreSQL Connection Pool (pg) mit TLS-Konfiguration
+├── db/migrations/               # SQL-Schemata für Events, Kontaktanfragen & Bewerbungen
+├── src/
+│   ├── components/              # Wiederverwendbare UI- & Layout-Komponenten (Navbar, Footer, Cards)
+│   ├── features/                # Feature-Module (landing, aktionen, galerie, news, mitmachen, kontakt, admin)
+│   ├── data/                    # Statische Initialdaten & Content-Modelle
+│   ├── server/                  # Geteilte Validierungslogik für API-Payloads
+│   └── types/                   # TypeScript-Domänentypen
+└── vercel.json                  # Routing- & Deployment-Konfiguration
+```
+
+---
+
+## 🚀 Lokale Entwicklung & Setup
+
+### 1. Abhängigkeiten installieren
+
+```bash
+npm install
+```
+
+### 2. Umgebungsvariablen konfigurieren
+
+Erstelle eine `.env.local`-Datei im Projektwurzelverzeichnis:
+
+```dotenv
+DATABASE_URL="postgresql://user:password@localhost:5432/jufo"
+ADMIN_API_TOKEN="dein-sicheres-admin-token"
+RESEND_API_KEY="re_..."
+CONTACT_TEAM_EMAIL="team@jugendforum-grafing.de"
+CONTACT_FROM_EMAIL="Kontaktformular <noreply@jugendforum-grafing.de>"
+```
+
+### 3. Datenbank-Migrationen einspielen
+
+```bash
+psql "$DATABASE_URL" -f db/migrations/001_event_registrations.sql
+psql "$DATABASE_URL" -f db/migrations/002_contact_requests.sql
+psql "$DATABASE_URL" -f db/migrations/003_applications.sql
+```
+
+### 4. Entwicklungsserver starten
+
+```bash
+npm run dev
+```
+
+Für einen Produktions-Build inklusive TypeScript-Prüfung:
+
+```bash
+npm run build
+npm run lint
+```
+
+---
+
+## 🔒 Sicherheit & Datenschutz
+
+- **Authentifizierung:** Der Abruf gespeicherter Bewerbungen (`GET /api/applications`) ist durch ein Bearer-Token (`ADMIN_API_TOKEN`) mit konstant-zeitlichem Vergleich (`crypto.timingSafeEqual`) geschützt.
+- **DSGVO-Sparsamkeit:** IP-Adressen bei Formularen werden ausschließlich als SHA-256-Hash zur Missbrauchsprävention und Einwilligungsdokumentation gespeichert.
+- **Datenbanksicherheit:** Alle Datenbankabfragen nutzen parametrisierte SQL-Statements (`$1, $2, ...`) über `pg.Pool` sowie erzwungene TLS-Zertifikatsprüfung in Produktionsumgebungen.
