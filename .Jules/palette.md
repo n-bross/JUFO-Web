@@ -1,0 +1,3 @@
+## 2024-05-15 - Pairing Visual Toggle States with aria-pressed
+**Learning:** Filter and toggle buttons that rely solely on visual styling (like background colors or shadows) to indicate their active state are inaccessible to screen reader users. Screen readers announce the button, but not its selected state, leaving users unaware of the active filter or mode.
+**Action:** Always pair visual active/selected states on buttons that act as toggles or filters with the `aria-pressed="true"` (or `aria-pressed="false"`) attribute. This ensures the state is programmatically determinable and announced by assistive technologies.
