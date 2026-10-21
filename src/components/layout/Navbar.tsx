@@ -51,7 +51,6 @@ export function Navbar() {
             <Link
               key={link.href}
               to={link.href}
-              aria-current={location.pathname === link.href ? 'page' : undefined}
               className={cn(
                 'text-sm font-semibold transition-colors',
                 location.pathname === link.href
@@ -85,7 +84,6 @@ export function Navbar() {
             <Link
               key={link.href}
               to={link.href}
-              aria-current={location.pathname === link.href ? 'page' : undefined}
               className={cn(
                 'text-base font-semibold py-3 border-b border-black/10 flex items-center justify-between',
                 location.pathname === link.href ? 'text-black' : 'text-black/70'

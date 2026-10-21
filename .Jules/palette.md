@@ -1,0 +1,3 @@
+## 2023-10-21 - ARIA Pressed State for Toggles
+**Learning:** For filter controls and custom toggle buttons, relying purely on visual changes (like background color or border) leaves screen reader users guessing about the current state.
+**Action:** Always pair visual selected states on buttons acting as toggles or filters with the `aria-pressed` attribute (`aria-pressed={true|false}`) so assistive technologies announce the state change correctly.

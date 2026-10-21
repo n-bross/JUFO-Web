@@ -252,6 +252,7 @@ export default function AktionenPage() {
                     ? 'bg-black text-white shadow-[2px_2px_0_#FFC300]'
                     : 'bg-white text-black hover:bg-black/5'
                 }`}
+                aria-pressed={activeFilter === f}
               >
                 {filterLabels[f]}
               </button>
