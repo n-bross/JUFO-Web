@@ -58,7 +58,6 @@ export function Navbar() {
                   ? 'text-black underline decoration-2 underline-offset-4'
                   : 'text-black/60 hover:text-black'
               )}
-              aria-current={location.pathname === link.href ? "page" : undefined}
             >
               {link.label}
             </Link>
@@ -90,7 +89,6 @@ export function Navbar() {
                 'text-base font-semibold py-3 border-b border-black/10 flex items-center justify-between',
                 location.pathname === link.href ? 'text-black' : 'text-black/70'
               )}
-              aria-current={location.pathname === link.href ? "page" : undefined}
             >
               {link.label}
               {location.pathname === link.href && (
