@@ -1,0 +1,1 @@
+## 2024-05-24 - Accessibility improvements for toggle buttons\n**Learning:** Discovered an accessibility issue pattern specific to this app's components where stateful filter/toggle buttons only indicate their state visually.\n**Action:** Add aria-pressed attribute to toggle buttons to pair visual state changes with semantic meaning for screen readers.
