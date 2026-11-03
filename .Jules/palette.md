@@ -1,0 +1,1 @@
+## 2026-11-03 - aria-pressed attribute on filter buttons\n**Learning:** Discovered that custom filter toggle buttons were missing the aria-pressed attribute, making it difficult for screen readers to understand the active state.\n**Action:** Always add aria-pressed to filter buttons that act as toggles, and dynamically set it based on the active filter state.
