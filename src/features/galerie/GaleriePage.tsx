@@ -45,6 +45,7 @@ export default function GaleriePage() {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
+              aria-pressed={activeCategory === category}
               className={`px-4 py-2 text-sm font-bold rounded-full border-2 border-black transition ${
                 activeCategory === category ? 'bg-black text-white' : 'bg-white text-black hover:bg-black/5'
               }`}
