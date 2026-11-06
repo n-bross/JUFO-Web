@@ -1,0 +1,3 @@
+## 2026-11-06 - Missing aria-pressed attributes for toggle buttons
+**Learning:** This application extensively uses visually distinct states (via Tailwind CSS classes like bg-black vs bg-white) to indicate active filters and toggles, but frequently omitted the corresponding semantic `aria-pressed` attribute, preventing screen readers from understanding which option is currently selected.
+**Action:** When adding or reviewing filter buttons and state toggles in this codebase, always verify that the visual active state is paired with an `aria-pressed` boolean attribute matching the same active condition.
