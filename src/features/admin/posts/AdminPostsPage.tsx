@@ -86,7 +86,7 @@ export default function AdminPostsPage() {
 
           <div className="flex gap-2">
             {(['draft', 'published'] as PostStatus[]).map((status) => (
-              <button type="button" key={status} onClick={() => setForm((old) => ({ ...old, status }))} className={`px-3 py-2 rounded-lg border-2 border-black font-semibold ${form.status === status ? 'bg-brand-yellow' : 'bg-white'}`}>
+              <button type="button" key={status} onClick={() => setForm((old) => ({ ...old, status }))} aria-pressed={form.status === status} className={`px-3 py-2 rounded-lg border-2 border-black font-semibold ${form.status === status ? 'bg-brand-yellow' : 'bg-white'}`}>
                 {status === 'draft' ? 'Entwurf' : 'Veröffentlicht'}
               </button>
             ))}
