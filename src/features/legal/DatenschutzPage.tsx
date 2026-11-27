@@ -91,7 +91,7 @@ export default function DatenschutzPage() {
                     {privacyConfig.kontaktMailUeberResend ? (
                       <>
                         {' '}
-                        sowie Resend, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA, für die Zustellung einer
+                        sowie Resend, Inc. (USA) für die Zustellung einer
                         Benachrichtigungs-E-Mail mit dem Inhalt deiner Anfrage an das Team. Die Übermittlung in die USA
                         erfolgt auf Grundlage des EU-US Data Privacy Framework bzw. von EU-Standardvertragsklauseln
                         (Art. 46 DSGVO)
