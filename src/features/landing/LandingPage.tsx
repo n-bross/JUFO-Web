@@ -89,21 +89,21 @@ export default function LandingPage() {
           >
             <div className="absolute left-[0%] top-[12%] w-44 h-60 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[-5deg] z-20 bg-black">
               <img
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=400&q=80"
+                src="/images/unsplash/photo-1529156069898-49953e39b3ac-w400.webp"
                 className="w-full h-full object-cover"
                 alt="Jugendliche"
               />
             </div>
             <div className="absolute left-[28%] top-[3%] w-48 h-64 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[6deg] z-30 bg-black">
               <img
-                src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400&q=80"
+                src="/images/unsplash/photo-1517245386807-bb43f82c33c4-w400.webp"
                 className="w-full h-full object-cover"
                 alt="Workshop"
               />
             </div>
             <div className="absolute right-[0%] top-[6%] w-44 h-60 rounded-[1.2rem] border-4 border-black shadow-[4px_4px_0_#000] overflow-hidden rotate-[-3deg] z-40 bg-black">
               <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80"
+                src="/images/unsplash/photo-1552664730-d307ca884978-w400.webp"
                 className="w-full h-full object-cover"
                 alt="Event"
               />
@@ -298,7 +298,7 @@ export default function LandingPage() {
           >
             <div className="w-full h-full rounded-[2rem] overflow-hidden border-4 border-white/20">
               <img
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"
+                src="/images/unsplash/photo-1529156069898-49953e39b3ac-w800.webp"
                 alt="Jugendforum Treffen"
                 className="w-full h-full object-cover"
               />

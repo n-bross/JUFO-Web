@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Send, Star, Users, Calendar, Lightbulb } from 'lucide-react';
@@ -272,8 +273,10 @@ export default function MitmachenPage() {
                       className="mt-0.5 w-4 h-4 border-2 border-black rounded accent-brand-yellow"
                     />
                     <label htmlFor="consent" className="text-xs text-black/60 leading-relaxed">
-                      Ich stimme zu, dass meine Daten zur Bearbeitung meiner Bewerbung gespeichert werden.
-                      Die Daten werden nicht an Dritte weitergegeben. *
+                      Ich willige ein, dass meine Angaben zur Bearbeitung meiner Bewerbung gespeichert und
+                      verarbeitet werden. Die Einwilligung kann ich jederzeit widerrufen. Details stehen in der{' '}
+                      <Link to="/datenschutz" className="underline underline-offset-2">Datenschutzerklärung</Link>.
+                      Du bist unter 16? Dann sprich bitte vorher mit deinen Eltern. *
                     </label>
                   </div>
 

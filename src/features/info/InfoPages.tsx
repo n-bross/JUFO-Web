@@ -1,34 +1,6 @@
 import { Link } from 'react-router-dom';
 import SimplePage from './SimplePage';
 
-export function ImpressumPage() {
-  return (
-    <SimplePage
-      title="Impressum"
-      intro="Angaben gemäß § 5 TMG für das Jugendforum Grafing."
-      sections={[
-        { title: 'Anbieter', content: <p>Jugendforum Grafing, Rathausplatz 1, 85567 Grafing b. München.</p> },
-        { title: 'Kontakt', content: <p>E-Mail: info@jufo-grafing.de · Instagram: @jufo.grafing</p> },
-        { title: 'Verantwortlich für Inhalte', content: <p>Vorstand Jugendforum Grafing.</p> },
-      ]}
-    />
-  );
-}
-
-export function DatenschutzPage() {
-  return (
-    <SimplePage
-      title="Datenschutz"
-      intro="Wir verarbeiten personenbezogene Daten sparsam und zweckgebunden."
-      sections={[
-        { title: 'Welche Daten', content: <p>Kontaktanfragen, freiwillige Formularangaben und technisch notwendige Nutzungsdaten.</p> },
-        { title: 'Wofür', content: <p>Zur Kommunikation, Organisation von Aktionen und sicheren Bereitstellung der Website.</p> },
-        { title: 'Deine Rechte', content: <p>Auskunft, Berichtigung, Löschung und Widerspruch. Kontakt: datenschutz@jufo-grafing.de.</p> },
-      ]}
-    />
-  );
-}
-
 export function BarrierefreiheitPage() {
   return (
     <SimplePage
