@@ -99,7 +99,7 @@ export default function UeberUnsPage() {
           >
             <div className="rounded-[2rem] overflow-hidden border-2 border-black shadow-[6px_6px_0_#000] h-72 md:h-80">
               <img
-                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80"
+                src="/images/unsplash/photo-1523580494863-6f3031224c94-w800.webp"
                 alt="Jugendforum Treffen"
                 className="w-full h-full object-cover"
               />

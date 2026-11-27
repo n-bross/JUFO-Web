@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, Clock, Users, Send, CheckCircle } from 'lucide-react';
@@ -155,6 +156,10 @@ function RegisterModal({
                   Noch {event.spotsLeft} Plätze verfügbar
                 </p>
               )}
+              <p className="text-xs text-black/50 leading-relaxed">
+                Deine Angaben nutzen wir nur zur Organisation dieser Aktion. Mehr dazu in der{' '}
+                <Link to="/datenschutz" className="underline underline-offset-2">Datenschutzerklärung</Link>.
+              </p>
               <Button
                 type="submit"
                 variant="accent"

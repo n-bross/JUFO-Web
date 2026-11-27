@@ -25,7 +25,7 @@ const seedPosts: Post[] = [
     content:
       'Wir starten mit frischen Ideen in das neue Jahr. In mehreren Workshops sammeln wir eure Vorschläge für Grafing und setzen erste Projekte direkt gemeinsam um.',
     cover_image:
-      'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      '/images/unsplash/photo-1521737604893-d14cc237f11d-w1200.webp',
     published_at: '2026-04-10T09:30:00.000Z',
     author: 'JuFo Team',
     status: 'published',
@@ -45,7 +45,21 @@ export function getPosts(): Post[] {
   }
 
   try {
-    return JSON.parse(raw) as Post[];
+    const stored = JSON.parse(raw) as Post[];
+    // Ältere Browser-Speicherstände verweisen beim Beispielbeitrag noch auf ein extern
+    // gehostetes Titelbild. Auf die lokal ausgelieferte Datei umstellen, damit kein
+    // Request an einen Drittanbieter entsteht.
+    let migrated = false;
+    const next = stored.map((post) => {
+      const seed = seedPosts.find((s) => s.id === post.id && s.slug === post.slug);
+      if (seed && /^https?:\/\//.test(post.cover_image) && post.cover_image !== seed.cover_image) {
+        migrated = true;
+        return { ...post, cover_image: seed.cover_image };
+      }
+      return post;
+    });
+    if (migrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    return next;
   } catch {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(seedPosts));
     return seedPosts;

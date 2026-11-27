@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Instagram, MessageCircle, Send, CheckCircle, MapPin, Clock } from 'lucide-react';
@@ -230,6 +231,11 @@ export default function KontaktPage() {
                       {error}
                     </div>
                   ) : null}
+
+                  <p className="text-xs text-black/60 leading-relaxed">
+                    Deine Angaben verwenden wir nur, um deine Anfrage zu beantworten. Mehr dazu in der{' '}
+                    <Link to="/datenschutz" className="underline underline-offset-2">Datenschutzerklärung</Link>.
+                  </p>
 
                   <Button
                     type="submit"

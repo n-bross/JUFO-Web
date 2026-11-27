@@ -58,7 +58,7 @@ export const events: JufoEvent[] = [
     category: 'event',
     spots: 20,
     confirmedRegistrations: 12,
-    image: 'https://images.unsplash.com/photo-1577415124269-fc1140a69e91?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1577415124269-fc1140a69e91-w800.webp',
     registrationOpen: true,
   },
   {
@@ -74,7 +74,7 @@ export const events: JufoEvent[] = [
     category: 'workshop',
     spots: 25,
     confirmedRegistrations: 13,
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1552664730-d307ca884978-w800.webp',
     registrationOpen: true,
   },
   {
@@ -89,7 +89,7 @@ export const events: JufoEvent[] = [
     category: 'social',
     spots: 150,
     confirmedRegistrations: 63,
-    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1533174072545-7a4b6ad7a6c3-w800.webp',
     registrationOpen: true,
   },
   {
@@ -105,7 +105,7 @@ export const events: JufoEvent[] = [
     category: 'sport',
     spots: 48,
     confirmedRegistrations: 24,
-    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1546519638-68e109498ffc-w800.webp',
     registrationOpen: true,
   },
   {
@@ -120,7 +120,7 @@ export const events: JufoEvent[] = [
     category: 'social',
     spots: 200,
     confirmedRegistrations: 66,
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1470225620780-dba8ba36b745-w800.webp',
     registrationOpen: false,
   },
   {
@@ -136,7 +136,7 @@ export const events: JufoEvent[] = [
     category: 'workshop',
     spots: 30,
     confirmedRegistrations: 8,
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
+    image: '/images/unsplash/photo-1517245386807-bb43f82c33c4-w800.webp',
     registrationOpen: false,
   },
 ];
